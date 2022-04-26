@@ -1,0 +1,103 @@
+
+###
+
+POST http://localhost:8000/login
+Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "1234"
+}
+###
+GET    http://localhost:8000/users 
+
+###
+GET    http://localhost:8000/patient/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+###
+
+POST    http://localhost:8000/patients/addpatients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+{
+    "firstName": "bro",
+    "lastName": "frp",
+    "cin" : 3
+}
+###
+GET    http://localhost:8000/patients
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+###
+GET    http://localhost:8000/rdvs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+###
+POST    http://localhost:8000/patient
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+{
+    "firstName": "Yahya",
+    "lastName": "Yahya"
+}
+
+###
+###
+POST    http://localhost:8000/rdv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+{
+    "patientId": 1,
+    "motif": "skhana",
+    "date": "2022/04/22" 
+}
+
+###
+POST    http://localhost:8000/visit
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+{
+    "motif": "fever",
+    "interrogatoire": "voo",
+    "conclusion": "dwa",
+    "prix": 200,
+    "patientId":1
+}
+
+
+######
+GEt    http://localhost:8000/visit
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+######
+GEt    http://localhost:8000/allrdvs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+######
+GEt    http://localhost:8000/rdvs/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+######
+GEt    http://localhost:8000/payment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+
+######
+POST    http://localhost:8000/payment/addpayment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+{
+    "patientId": 1,
+    "visitId": 1,
+    "montant": 2000.00,
+    "rest":1.00
+}
