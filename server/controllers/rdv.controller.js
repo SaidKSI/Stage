@@ -57,7 +57,7 @@ function addRdv(db){
 //         return res.json(rdvs) 
 //     }
 // }
-function Allrdvs(db){
+function listRdvs(db){
 
    
     return async function (req,res) {
@@ -65,11 +65,12 @@ function Allrdvs(db){
         let rdvs= await db.Rdv.findAll(
             {
                 where:{},
-
+                include: [{ model: db.Patient }],
+                order: [["daterdv", "DESC"]],
            }
         );
 
         return res.json(rdvs) 
     }
 }
-module.exports={addRdv,Allrdvs}
+module.exports={addRdv,listRdvs}

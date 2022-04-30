@@ -11,6 +11,9 @@ function listPatients(db) {
     return res.json(patients);
   };
 }
+
+
+
 function detailsPatient(db) {
   return async function (req, res) {
     try {
@@ -18,7 +21,7 @@ function detailsPatient(db) {
 
       let patient = await db.Patient.findOne({
         where: { id: id },
-        include: [{ model: db.Rdv , as:"rdvs"}],
+        include: [{ model: db.Rdv }],
         order: [[db.Rdv, "daterdv", "DESC"]],
       });
 
@@ -33,6 +36,8 @@ function detailsPatient(db) {
   };
 }
 
+
+
 function addPatient(db) {
   return async function (req, res) {
     try {
@@ -45,11 +50,11 @@ function addPatient(db) {
         return res
           .status(400)
           .json({ status: "failed", error: errors.join(", ") });
-
+          cin = parseInt(req.body.cin)
       let newPatient = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        cin: req.body.cin,
+        cin: cin
       };
 
       let patient = await db.Patient.create(newPatient);
@@ -61,23 +66,54 @@ function addPatient(db) {
   };
 }
 
+
+
 function updatePatient(db) {
   return function (req, res) {
     return response.json("");
   };
 }
 
+
+
 function deletePatient(db) {
   return async function (req, res) {
     try {
       let id = parseInt(req.params.id);
-
-      let deleted = await db.Patient.destroy({
+  //     let deleteVisits= await db.Visit.db ({
+  //           where : {	patientId : id}
+  //     });
+  //     let deleteRdvs= await db.Rdv.db ({
+  //       where : {	patientId : id}
+  // });
+      await db.Patient.destroy({
         where: { id: id },
       });
-      return res.json(deleted);
+      return res.json("patient deleted");
     } catch (err) {
       return res.status(500).json(err);
+    }
+  };
+}
+
+function searchPatient(db) {
+  return async function (req, res) {
+    try {
+      let cin = parseInt(req.params.cin);
+
+      let patient = await db.Patient.findOne({
+        where: { cin: cin },
+        include: [{ model: db.Rdv }],
+        order: [[db.Rdv, "daterdv", "DESC"]],
+      });
+
+      if (patient) {
+        return res.json({ status: "success", payload: patient });
+      } else
+        return res.status(404).json({ status: "failed", payload: "not found" });
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
@@ -85,7 +121,8 @@ function deletePatient(db) {
 module.exports = {
   detailsPatient,
   listPatients,
-  deletePatient,
   updatePatient,
   addPatient,
+  deletePatient,
+  searchPatient
 };

@@ -16,7 +16,7 @@ export default function Layout({ children }) {
 
         </div>
 
-        <footer className='mt-[20%]'>
+        <footer className='py-auto'>
             copyright {new Date().getFullYear()}
         </footer>
     </div>

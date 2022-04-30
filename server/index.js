@@ -9,10 +9,10 @@ const { authenticateToken } = require("./middleware/auth");
 //database
 const db = require("./models");
 
-const { listPatients, deletePatient, addPatient, detailsPatient } = require("./controllers/patients.controller");
-const { addRdv, listRdv,Allrdvs } = require("./controllers/rdv.controller");
-const { login , getUser } = require("./controllers/users.conroller");
-const { addVisit , listVisit } = require("./controllers/visits.controller");
+const { listPatients, addPatient, detailsPatient,deletePatient,searchPatient } = require("./controllers/patients.controller");
+const { addRdv,listRdvs } = require("./controllers/rdv.controller");
+const { login , getUser,addUser } = require("./controllers/users.conroller");
+const { addVisit , listVisit,deleteVisit,detailsVisit } = require("./controllers/visits.controller");
 const { listPayment , addPayment } = require("./controllers/payments.controller");
 
 
@@ -33,13 +33,14 @@ app.use(express.urlencoded(true))
 // Endpoint, Route, web service, 
 
 // VISITS
-app.post("/visit", authenticateToken,addVisit(db))
-app.get("/visit", authenticateToken,listVisit(db))
-
+app.post("/visits/addvisit", authenticateToken,addVisit(db))
+app.get("/visits", authenticateToken,listVisit(db))
+app.delete("/visits" , authenticateToken ,deleteVisit(db));
+app.get("/visits/:id" , authenticateToken ,detailsVisit(db));
 // PAYMENTS
 
-app.get("/payment", authenticateToken,listPayment(db))
-app.get("/payment/addpayment", authenticateToken,addPayment(db))
+app.get("/payments", authenticateToken,listPayment(db))
+app.post("/payments/addpayment/:id", authenticateToken,addPayment(db))
 
 
 
@@ -47,20 +48,24 @@ app.get("/payment/addpayment", authenticateToken,addPayment(db))
 
 
 app.get("/patients", authenticateToken,listPatients(db))
-app.post("/patients/addpatients", authenticateToken,addPatient(db))
-app.get("/patient/:id", authenticateToken,deletePatient(db))
+app.post("/patients/addpatient", authenticateToken,addPatient(db))
+app.delete("/patients/:id", authenticateToken,deletePatient(db))
 app.get("/patients/:id", authenticateToken,detailsPatient(db))
+app.get("/patients/:cin", authenticateToken,searchPatient(db))
 
 
 // USERS
 
 //app.get("/" , getUser(db))
 app.post("/login", login(db))
+app.post("/users/adduser", authenticateToken ,addUser(db))
+app.get("/users", authenticateToken ,getUser(db))
 
 // RDVS
 
-app.get("/allrdvs",authenticateToken,Allrdvs(db))
-app.post("/rdv", authenticateToken,addRdv(db))
+app.get("/rdvs",authenticateToken,listRdvs(db))
+app.post("/rdvs/addrdv", authenticateToken,addRdv(db))
+
 
 // app.get("/rdvs/:id", authenticateToken,listRdv(db))
 

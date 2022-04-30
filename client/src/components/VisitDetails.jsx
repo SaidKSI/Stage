@@ -1,72 +1,50 @@
 import axios from "axios";
+import dateFormat from "dateformat";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 
-export default function PatientDetails() {
-  const [patient, setPatient] = useState(null);
+
+export default function VisitDetails() {
+  const [visit, setVisit] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  let firstNameref = useRef();
-  let lastNameref = useRef();
-  let cinref = useRef();
-  let savebutton = useRef();
-  let updatebutton = useRef();
-
+ 
   let { id } = useParams();
+  
+  // get one Visit
+  async function getVisit(visitId) {
+    try {
+      setLoading(true);
+      let response = await axios.get(
+        "http://localhost:8000/visits/" + visitId,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+
+      let { payload } = response.data;
+      setVisit(payload);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     try {
-      let pid = parseInt(id);
-      getPatient(pid);
+      let vid = parseInt(id);
+      getVisit(vid);
     } catch (err) {
       alert("not found");
     }
   }, []);
-  // get one Patient
-  async function getPatient(patientId) {
-    try {
-      setLoading(true);
-      let response = await axios.get(
-        "http://localhost:8000/patients/" + patientId,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("user_token"),
-          },
-        }
-      );
-
-      let { payload } = response.data;
-      setPatient(payload);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
-  }
-  async function deletePatient(patientId) {
-    try {
-      setLoading(true);
-      let response = await axios.delete(
-        "http://localhost:8000/patients/" + patientId,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("user_token"),
-          },
-        }
-      );
-
-      let { payload } = response.data;
-
-      setLoading(false);
-      <Navigate to={"/patients"}></Navigate>;
-    } catch (err) {
-      setLoading(false);
-    }
-  }
-
+  
   return loading ? (
     <div>loading...</div>
   ) : (
     <div>
-      {patient ? (
+      {visit ? (
         <div>
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
@@ -74,78 +52,74 @@ export default function PatientDetails() {
                 Applicant Information
               </h3>
               <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Personal details and application.
+                Visit details .
               </p>
             </div>
             <div className="border-t border-gray-200">
               <dl>
-                <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">C.I.N</dt>
+              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-500">ID</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {patient.cin}
+                    {visit.id}
                   </dd>
-                </div>
-                <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  </div>
+                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
                     Full name
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{`${patient.firstName} ${patient.lastName}`}</dd>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{`${visit.Patient.firstName} ${visit.Patient.lastName}`}</dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Age</dt>
+                  <dt className="text-sm font-medium text-gray-500">Motif</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    ....
+                    {visit.motif}
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
-                    Email address / Phone Number
+                  Interrogatoire
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    margotfoster@example.com
+                    {visit.interrogatoire}
                   </dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
-                    Total debt
+                  Conclusion
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    $120,000
+                    {visit.conclusion}
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  
-                    <div className="">
-                    <button
-                      ref={updatebutton}
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 w-20 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      // onClick={update()}
-                    >
-                      Modifier
-                    </button></div>
-                    <div>
-                      <button
-                      ref={updatebutton}
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 w-20 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      // onClick={update()}
-                    >
-                      Supp
-                    </button></div>
-                    
-                    
-                    {/* <button
-                      ref={updatebutton}
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 w-20 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                       onClick={update()}
-                    >
-                      Supp
-                    </button> */}
+                  <dt className="text-sm font-medium text-gray-500">
+                  Prix
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {visit.prix}
+                  </dd>
                   
                 </div>
+                
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+
+                  <div className="px-4 py-3  text-right sm:px-6">
+                  <Link to={"/payments/addpayment/"+visit.Patient.id}>
+                  
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                   
+                  >
+                    Add Payment
+                    
+                  </button>
+                  </Link>
+                  </div>
+                 
+                  
+                </div>
+                {/* <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">RDV</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <div className=" bg-gray-100">
@@ -189,7 +163,7 @@ export default function PatientDetails() {
                       </div>
                     </div>
                   </dd>
-                </div>
+                </div> */}
               </dl>
             </div>
           </div>
@@ -201,3 +175,4 @@ export default function PatientDetails() {
     </div>
   );
 }
+

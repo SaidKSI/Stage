@@ -26,11 +26,13 @@ module.exports = {
         onUpdate: "CASCADE",
         allowNull: false,
       },
+      
       montant: {
         type: Sequelize.FLOAT,
       },
       rest: {
         type: Sequelize.FLOAT,
+        defaultValue : 0.0
       },
 
       createdAt: {

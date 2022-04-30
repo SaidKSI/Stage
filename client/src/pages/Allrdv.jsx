@@ -1,46 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import Time from "../components/Time";
-import { Navigate } from "react-router-dom";
-
-
-
-export default function Visit() {
-  const [visits, setVisit] = useState([]);
+import { Link } from "react-router-dom";
+import Time from "../components/Time"
+export default function Allrdv() {
+  const [rdvs, setrdvs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('')
-
-  let { id } = useParams();
   useEffect(() => {
-    async function getVisits() {
+    async function getAllRdv() {
       try {
-        
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/visits", {
+        let response = await axios.get("http://localhost:8000/rdvs", {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("user_token","role"),
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
         });
-
+          
         let list = response.data;
-        setVisit(list);
+        setrdvs(list);
         setLoading(false);
       } catch (err) {
         setLoading(false);
       }
     }
 
-    getVisits();
+    getAllRdv();
   }, []);
-  async function deleteVisitt() {}
 
   return (
-    <div>
-      <div className="text-right text-lg">
+      <div>
+     <div className="text-right text-lg">
         <Time></Time>
       </div>
-    <div className="grid grid-rows-5 grid-cols-5 ">
+      <div className="grid grid-rows-5 grid-cols-5 ">
       <div className="col-span-5 row-span-5">
         <div className=" bg-gray-100">
         <div className="px-5 py-5"> 
@@ -55,8 +47,8 @@ export default function Visit() {
               placeholder="Search...."
             />
         </div>
-          <h1 className="text-xl text-blue-600 py-1 px-5 mb-2">Visits</h1>
-              
+          <h1 className="text-xl py-1 px-5 text-blue-800 mb-2">RDVs</h1>
+
           <div className="overflow-auto px-32	 rounded-lg shadow hidden md:block">
             <table className=" origin-center	">
               <thead className="bg-gray-50 border-b-2 border-gray-300">
@@ -67,34 +59,25 @@ export default function Visit() {
                   <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
                     Full Name
                   </th>
-                  <th className="p-3 min-w-96 text-sm font-semibold tracking-wide text-left">
+                  <th className="p-3 w-9/12 text-sm font-semibold tracking-wide text-left">
                     Motif
-                  </th>
-                  <th className="p-3 min-w-96 text-sm font-semibold tracking-wide text-left">
-                    interrogatoire
-                  </th>
-                  <th className="p-3 min-w-96 text-sm font-semibold tracking-wide text-left">
-                    Conclusion
-                  </th>
-                  <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
-                    Prix
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-300">
-                {visits
-                .filter((visit) => {
+                {rdvs
+                .filter((rdv, index) => {
                   if (search == "") {
-                    return visit
+                    return rdv
                   } else if (
-                    visit.Patient.firstName.toLowerCase().includes(search) || visit.Patient.lastName.toLowerCase().includes(search)
+                    rdv.Patient.firstName.toLowerCase().includes(search) || rdv.Patient.lastName.toLowerCase().includes(search)
                   ) {
-                    return visit
+                    return rdv
                   }
                 })
-                .map((visit, index) => ( 
+                .map((rdv, index) => ( 
                   <tr >
-                    <Link to={"/visits/" + visit.id}>
+                    <Link to={"/rdv/" + rdv.id}>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <a
                           className="font-bold text-blue-500 hover:underline"
@@ -105,28 +88,19 @@ export default function Visit() {
                       </td>
                     </Link>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {`${visit.Patient.firstName} ${visit.Patient.lastName}`}
+                      {`${rdv.Patient.firstName} ${rdv.Patient.lastName}`}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {visit.motif}
-                    </td>
-                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {visit.interrogatoire}
-                    </td>
-                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {visit.conclusion}
-                    </td>
-                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {visit.prix}
+                      {rdv.motif}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <div className="py-10">
-              <Link to={"/visits/addvisit"}>
+              <Link to={"/rdvs/addrdv"}>
                 <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Add Visit
+                  Add RDV
                 </button>
               </Link>
             </div>
@@ -135,6 +109,6 @@ export default function Visit() {
         <div>{loading ? <p>Chargement...</p> : ""}</div>
       </div>
     </div>
-    </div>
+</div>
   );
 }

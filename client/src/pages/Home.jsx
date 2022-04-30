@@ -1,15 +1,41 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CurrentTime from "../components/CurrentTime";
+import PatientList from "./PatientList";
+import Allrdv from "./Allrdv";
+import Visit from "./Visit";
+import Paiment from "./Paiment";
 
 export default function Home() {
-  const [user, setuser] = useState();
+  
 
   
 
   return (
-    <div className="container">
-        <CurrentTime></CurrentTime>
-</div>
+    <div className="flex flex-col ">
+      <div className="flex justify-between py-4">
+        <div className="text-blue-800">{localStorage.getItem("userName")}</div>
+        <div className="text-blue-800">{localStorage.getItem("role")}</div>
+        <div className="Date">
+          <CurrentTime></CurrentTime>
+        </div>
+      </div>
+
+      <div className="py-4">
+      
+        <PatientList></PatientList>
+      </div>
+      <div className="py-4">
+    
+        <Allrdv></Allrdv>
+      </div>
+      <div className="py-4">
+    
+        <Visit></Visit>
+      </div>
+      <div className="py-4">
+        
+        <Paiment></Paiment>
+      </div>
+    </div>
   );
 }

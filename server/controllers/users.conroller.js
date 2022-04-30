@@ -20,8 +20,8 @@ function login(db) {
       },
     });
     if (user) {
-      let token = generateAccessToken({ email: user.email });
-      return res.json({ status: "success", token: token , userid :user.id});
+      let token = generateAccessToken({ email: user.email , role : user.role });
+      return res.json({ status: "success", token: token , userid :user.id, role : user.role , firstName : user.firstName,lastName : user.lastName});
     } else {
       return res
         .status(404)
@@ -46,5 +46,36 @@ function getUser(db) {
   };
 }
   
+function addUser(db) {
+  return async function (req, res) {
+    try {
+      let errors = [];
+      if (!req.body.firstName) errors.push("no first name");
+      if (!req.body.lastName) errors.push("no last name");
+      if (!req.body.role) errors.push("no role");
+      if (!req.body.password) errors.push("no last name");
+      if (!req.body.email) errors.push("no last name");
+      
 
-module.exports = {login , getUser}
+      if (errors.length > 0)
+        return res
+          .status(400)
+          .json({ status: "failed", error: errors.join(", ") });
+          
+      let newUser = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        role: req.body.role,
+        password : req.body.password,
+        email : req.body.email
+      };
+
+      let user = await db.User.create(newUser);
+      res.send("create a User");
+      return res.status(201).json({ status: "success", payload: user });
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  };
+}
+module.exports = {login , getUser,addUser}

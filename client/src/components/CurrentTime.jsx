@@ -10,7 +10,10 @@ export default function CurrentTime() {
 
   return (
     <div>
-      <h1>Current date is {date} {Time} </h1>
+      <h1 className="text-blue-800">Current date is : {date} {Time} </h1>
     </div>
   );
 }
+
+
+

@@ -16,7 +16,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        isIn: [['Docteur', 'Assistance']],
       },
       email: {
         type: Sequelize.STRING

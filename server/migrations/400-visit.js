@@ -9,27 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       motif: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       interrogatoire: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       conclusion: {
-        type: Sequelize.STRING,
-      },
-      prix: {
-        type: Sequelize.FLOAT,
-      },
+        type: Sequelize.STRING
+      }, 
       patientId: {
         type: Sequelize.INTEGER,
         references: {
           model: "patients",
           key: "id"
         },
+        //onDelete : "CASCADE",
         onUpdate: "CASCADE",
         allowNull: false
       }, 
-  
+      prix: {
+        type: Sequelize.FLOAT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

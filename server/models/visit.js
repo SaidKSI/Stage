@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   class Visit extends Model {
   
     static associate(models) {
-      Visit.belongsTo(models.Patient, {foreignKey: 'patientId'})
+      Visit.belongsTo(models.Patient, {foreignKey: 'patientId'}),
+      Visit.hasMany(models.Payment)
+
     }
   }
   Visit.init({ 
@@ -14,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     interrogatoire: DataTypes.STRING,
     conclusion: DataTypes.STRING,
     prix: DataTypes.FLOAT
+   
     
   }, {
     sequelize,

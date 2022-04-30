@@ -2,17 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 
 export default function AddVisit() {
-  const [patientId, setpatientId] = useState("");
-  const [motif, setmotif] = useState("");
+  const [patientId, setPatientId] = useState("");
+  const [motif, setMotif] = useState("");
   const [interrogatoire, setinterrogatoire] = useState("");
-  const [Conclusion, setConclusion] = useState("");
+  const [conclusion, setConclusion] = useState("");
   const [prix, setPrix] = useState("");
   function onInputChange(e) {
-    if (e.target.name === "patientId") setpatientId(e.target.value);
-    else if (e.target.name === "motif") setmotif(e.target.value);
+    if (e.target.name === "patientId") setPatientId(e.target.value);
+    else if (e.target.name === "motif") setMotif(e.target.value);
     else if (e.target.name === "interrogatoire")
       setinterrogatoire(e.target.value);
-    else if (e.target.name === "conclusion	") setConclusion(e.target.value);
+    else if (e.target.name === "conclusion") setConclusion(e.target.value);
     else if (e.target.name === "prix") setPrix(e.target.value);
   }
 
@@ -21,13 +21,13 @@ export default function AddVisit() {
     e.preventDefault();
 
     let response = await axios.post(
-      "http://localhost:8000/visit",
+      "http://localhost:8000/visit/addvisit",
       {
         patientId: patientId,
         motif: motif,
         interrogatoire : interrogatoire,
-        Conclusion: Conclusion,
-        prix: prix
+        conclusion: conclusion,
+        prix: prix,
       },
       {
         
@@ -39,14 +39,14 @@ export default function AddVisit() {
       
     );
   }
-
+  
   return (
     <div>
       <div>
         <div className="mt-10 sm:mt-0">
           <form action="#" method="POST">
             <div className="shadow overflow-hidden sm:rounded-md ">
-              <div className=" bg-white sm:p-3">
+              <div className="  sm:p-3">
                 <label
                   htmlFor="patientId"
                   className="block text-sm font-medium text-gray-700"
@@ -56,6 +56,7 @@ export default function AddVisit() {
                 <input
                   type="number"
                   id="patientId"
+                  value={patientId}
                   onChange={(e) => onInputChange(e)}
                   name="patientId"
                   autoComplete="patientId-name"
@@ -63,7 +64,7 @@ export default function AddVisit() {
                 />
               </div>
               <br></br>
-              <div className="bg-white sm:p-3">
+              <div className=" sm:p-3">
                 <label
                   htmlFor="motif"
                   className="block text-sm font-medium text-gray-700"
@@ -75,14 +76,14 @@ export default function AddVisit() {
                   onChange={(e) => onInputChange(e)}
                   id="motif"
                   name="motif"
-                  autoComplete="motif-name"
+                  value={motif}
                   className="mt-1 block w-[50%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                ></textarea>
+                />
               </div>
               <br></br>
-              <div className="bg-white sm:p-3">
+              <div className=" sm:p-3">
                 <label
-                  htmlFor="Interrogatoire"
+                  htmlFor="interrogatoire"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Interrogatoire
@@ -90,14 +91,14 @@ export default function AddVisit() {
                 <textarea
                   type="text"
                   onChange={(e) => onInputChange(e)}
-                  id="Interrogatoire"
-                  name="Interrogatoire"
-                  autoComplete="Interrogatoire-name"
+                  id="interrogatoire"
+                  value={interrogatoire}
+                  name="interrogatoire"
                   className="mt-1 block w-[50%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                ></textarea>
+                />
               </div>
               <br></br>
-              <div className="bg-white sm:p-3">
+              <div className="sm:p-3">
                 <label
                   htmlFor="conclusion"
                   className="block text-sm font-medium text-gray-700"
@@ -108,13 +109,13 @@ export default function AddVisit() {
                   type="text"
                   onChange={(e) => onInputChange(e)}
                   id="conclusion"
+                  value={conclusion}
                   name="conclusion"
-                  autoComplete="Conclusion-name"
-                  className="mt-1 block  border w-[50%]  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                ></textarea>
+                  className="mt-1 block w-[50%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
               <br></br>
-              <div className="bg-white sm:p-3">
+              <div className=" sm:p-3">
                 <label
                   htmlFor="prix"
                   className="block text-sm font-medium text-gray-700"

@@ -1,22 +1,65 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import Dialog from "./Msg";
 
 export default function AddPatient() {
+  const [isShowDialog, setIsShowDialog] = useState(false);
+  
+  const [total, setTotal] = useState()
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [cin, setcin] = useState("");
+
+
+  
 
   function onInputChange(e) {
     if (e.target.name === "firstName") setfirstName(e.target.value);
     else if (e.target.name === "lastName") setlastName(e.target.value);
     else if (e.target.name === "cin") setcin(e.target.value);
   }
-  async function onSubmit(e) {
+  // async function onSubmit(e) {
+    
+    
+  // }
+
+  const DialogActions = (btnColor) => {
+    return (
+      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button
+          type="button"
+          className={`w-full inline-flex justify-center rounded-md border 
+          border-transparent shadow-sm px-4 py-2 ${btnColor}-600 text-base
+          font-medium text-white hover:${btnColor}-700 focus:outline-none
+          focus:ring-2 focus:ring-offset-2 
+          focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
+          onClick={handleSubmit}
+        >
+          Add Patient
+        </button>
+        <button
+          type="button"
+          className="mt-3 w-full inline-flex justify-center rounded-md
+          border border-gray-300 shadow-sm px-4 py-2 bg-white text-base 
+          font-medium text-gray-700 hover:bg-gray-50 focus:outline-none
+          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+          sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          onClick={handleCloseDialog}
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  };
+  // async function handleSubmit(){
+  //   await onSubmit(e)
+  // }
+  const handleSubmit =async (e) => {
     e.preventDefault();
 
     let response = await axios.post(
-      "http://localhost:8000/patients/addpatients",
+      "http://localhost:8000/patients/addpatient",
       {
         firstName: firstName,
         lastName: lastName,
@@ -27,9 +70,14 @@ export default function AddPatient() {
           Authorization: "Bearer " + localStorage.getItem("user_token"),
         },
       }
-    ); //console.log(response)
-  }
-
+    );
+    // // Handle submit....
+  
+    };
+  
+    const handleCloseDialog = () => {
+      setIsShowDialog(!isShowDialog);
+    };
   return (
     <div>
       <div className="mt-10 sm:mt-0">
@@ -47,7 +95,7 @@ export default function AddPatient() {
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form action="#" method="POST">
               <div className="shadow overflow-hidden sm:rounded-md">
-                <div className="px-4 py-5 bg-white sm:p-6">
+                <div className="px-4 py-5  sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label
@@ -103,14 +151,27 @@ export default function AddPatient() {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    onClick={(e) => onSubmit(e)}
-                  >
-                    Save
-                  </button>
+                <div className="">
+                  <div className="px-4 py-3  text-right sm:px-6">
+                    <button
+                      type="submit"
+                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      onClick={handleCloseDialog}
+                    >
+                      Save
+                    </button>
+                  </div>
+                  {isShowDialog && (
+                    <Dialog
+                      title={"Dialog Title"}
+                      handleCloseDialog={handleCloseDialog}
+                      actionsPannel={DialogActions("bg-blue")}
+                      size={"w-2/7"}
+                      color={"bg-green"}
+                    >
+                      Dialog Content goes here...
+                    </Dialog>
+                  )}
                 </div>
               </div>
             </form>
@@ -120,3 +181,26 @@ export default function AddPatient() {
     </div>
   );
 }
+
+{/* <div className="">
+  <div className="px-4 py-3  text-right sm:px-6">
+    <button
+      type="submit"
+      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      onClick={handleCloseDialog}
+    >
+      Save
+    </button>
+  </div>
+  {isShowDialog && (
+    <Dialog
+      title={"Dialog Title"}
+      handleCloseDialog={handleCloseDialog}
+      actionsPannel={DialogActions("bg-blue")}
+      size={"w-2/7"}
+      color={"bg-green"}
+    >
+      Dialog Content goes here...
+    </Dialog>
+  )}
+</div>; */}

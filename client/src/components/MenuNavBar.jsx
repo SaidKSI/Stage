@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHospital } from "@fortawesome/free-solid-svg-icons";
 
 export default function MenuNavBar({ fixed }) {
+  const visit =useRef()
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-wrap py-2">
@@ -15,7 +17,7 @@ export default function MenuNavBar({ fixed }) {
                 <Link to={"/"}>
                   <a
                     className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-                    href="#pablo"
+                    href=""
                   >
                     <span className="flex items-center justify-center ">
                       <FontAwesomeIcon
@@ -44,24 +46,35 @@ export default function MenuNavBar({ fixed }) {
                     <Link to={"/patients"}>
                       <a
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                        href="#"
+                        href=""
                       >
                         patients
                       </a>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={"/visit"}>
+                    <Link to={"/visits"}>
                       <a
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href="/Visit"
+                       
                       >
                         Visit
                       </a>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={"/payment"}>
+                    <Link to={"/rdvs"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                        href=""
+                      >
+                        RDV
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/payments"}>
                       <a
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href=""
@@ -70,25 +83,25 @@ export default function MenuNavBar({ fixed }) {
                       </a>
                     </Link>
                   </li>
+                  <Link to={"/users"}>
                   <li className="nav-item">
                     <a
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                      href="#pablo"
+                      href=""
                     >
-                      Profile
+                      Users
                     </a>
-                  </li>
+                  </li></Link>
                   <li className="nav-item">
                     <a
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                       href="#pablo"
-                        onClick={() => {
-                          localStorage.removeItem("user_token");
-                          navigate("/login");
-                        }}
-                      >
-                        Logout
-                      
+                      onClick={() => {
+                        localStorage.removeItem("user_token");
+                        navigate("/login");
+                      }}
+                    >
+                      Logout
                     </a>
                   </li>
                 </ul>

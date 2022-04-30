@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       Patient.hasMany(models.Rdv ) ,
-      Patient.hasMany(models.Visit)
+      Patient.hasMany(models.Visit),
+      Patient.hasMany(models.Payment)
+
+     
+      
     }
   }
   Patient.init({

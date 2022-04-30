@@ -30,10 +30,15 @@ export default function Login() {
         
         }
       );
-      
+      let role = response.data.role
       let token=response.data.token
-       localStorage.setItem("user_token", token);
-
+      let userName = `${response.data.firstName} ${response.data.lastName}`
+      
+      
+      
+      localStorage.setItem("user_token", token);
+      localStorage.setItem("role",role)
+      localStorage.setItem("userName",userName)
       navigate("/");
     } catch (err) {
       alert("Email ou nom d'utilisateur est incorecte");
@@ -44,7 +49,7 @@ export default function Login() {
   }, []);
 
   useEffect(() => {}, [email]);
-
+  
   return (
     localStorage.getItem("user_token") ?
     <Navigate to={'/'} />
