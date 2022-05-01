@@ -9,7 +9,7 @@ const { authenticateToken } = require("./middleware/auth");
 //database
 const db = require("./models");
 
-const { listPatients, addPatient, detailsPatient,deletePatient,searchPatient } = require("./controllers/patients.controller");
+const { listPatients, addPatient, detailsPatient,deletePatient,searchPatient,countPatient } = require("./controllers/patients.controller");
 const { addRdv,listRdvs } = require("./controllers/rdv.controller");
 const { login , getUser,addUser } = require("./controllers/users.conroller");
 const { addVisit , listVisit,deleteVisit,detailsVisit } = require("./controllers/visits.controller");
@@ -51,7 +51,7 @@ app.get("/patients", authenticateToken,listPatients(db))
 app.post("/patients/addpatient", authenticateToken,addPatient(db))
 app.delete("/patients/:id", authenticateToken,deletePatient(db))
 app.get("/patients/:id", authenticateToken,detailsPatient(db))
-app.get("/patients/:cin", authenticateToken,searchPatient(db))
+app.get("/patientscount", authenticateToken,countPatient(db))
 
 
 // USERS

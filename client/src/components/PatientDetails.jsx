@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Dialog from "./Msg";
+
 
 export default function PatientDetails() {
   const [patient, setPatient] = useState(null);
+
   const [loading, setLoading] = useState(false);
+  const [isShowDialog, setIsShowDialog] = useState(false);
 
   let firstNameref = useRef();
   let lastNameref = useRef();
@@ -41,7 +45,33 @@ export default function PatientDetails() {
       setLoading(false);
     }
   }
-  async function deletePatient(patientId) {
+  // async function deletePatient(patientId) {
+  //   try {
+  //     setLoading(true);
+  //     let response = await axios.delete(
+  //       "http://localhost:8000/patients/" + patientId,
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + localStorage.getItem("user_token"),
+  //         },
+  //       }
+  //     );
+  //     setLoading(false);
+  //   } catch (err) {
+  //     setLoading(false);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   try {
+  //     let pid = parseInt(id);
+  //     deletePatient(pid);
+  //   } catch (err) {
+  //     alert("not found");
+  //   }
+  // }, []);
+
+  const handleSubmit = async (patientId) => {
     try {
       setLoading(true);
       let response = await axios.delete(
@@ -52,15 +82,53 @@ export default function PatientDetails() {
           },
         }
       );
-
-      let { payload } = response.data;
-
       setLoading(false);
-      <Navigate to={"/patients"}></Navigate>;
     } catch (err) {
       setLoading(false);
     }
-  }
+
+    
+  };
+useEffect(() => {
+      try {
+        let pid = parseInt(id);
+        handleSubmit(pid);
+      } catch (err) {
+        alert("not found");
+      }
+    }, []);
+  const handleCloseDialog = () => {
+    setIsShowDialog(!isShowDialog);
+  };
+
+  const DialogActions = (btnColor) => {
+    return (
+      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button
+          type="button"
+          className={`w-full inline-flex justify-center rounded-md border 
+          border-transparent shadow-sm px-4 py-2 ${btnColor}-600 text-base
+          font-medium text-white hover:${btnColor}-700 focus:outline-none
+          focus:ring-2 focus:ring-offset-2 
+          focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          className="mt-3 w-full inline-flex justify-center rounded-md
+          border border-gray-300 shadow-sm px-4 py-2 bg-white text-base 
+          font-medium text-gray-700 hover:bg-gray-50 focus:outline-none
+          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+          sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          onClick={handleCloseDialog}
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  };
 
   return loading ? (
     <div>loading...</div>
@@ -114,8 +182,7 @@ export default function PatientDetails() {
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  
-                    <div className="">
+                  <div className="">
                     <button
                       ref={updatebutton}
                       type="submit"
@@ -123,27 +190,29 @@ export default function PatientDetails() {
                       // onClick={update()}
                     >
                       Modifier
-                    </button></div>
-                    <div>
-                      <button
+                    </button>
+                  </div>
+                  <div>
+                    <button
                       ref={updatebutton}
                       type="submit"
                       className="inline-flex justify-center py-2 px-4 w-20 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      // onClick={update()}
+                      onClick={handleCloseDialog}
                     >
                       Supp
-                    </button></div>
-                    
-                    
-                    {/* <button
-                      ref={updatebutton}
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 w-20 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                       onClick={update()}
+                    </button>
+                  </div>
+                  {isShowDialog && (
+                    <Dialog
+                      title={"Dialog Title"}
+                      handleCloseDialog={handleCloseDialog}
+                      actionsPannel={DialogActions("bg-blue")}
+                      size={"w-2/7"}
+                      color={"bg-green"}
                     >
-                      Supp
-                    </button> */}
-                  
+                     Deleting Patients{`${patient.firstName} ${patient.lastName}`}?!
+                    </Dialog>
+                  )}
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">RDV</dt>

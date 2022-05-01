@@ -2,7 +2,7 @@ const db = require("../models");
 
 function listPayment(db) {
   return async function (req, res) {
-    let Payments = await db.Payment.findAll({
+    let Payments = await db.Payment.findAndCountAll({
       where: {},
       include: [
         {

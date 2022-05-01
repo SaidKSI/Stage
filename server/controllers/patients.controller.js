@@ -2,7 +2,7 @@ const db = require("../models");
 
 function listPatients(db) {
   return async function (req, res) {
-    let patients = await db.Patient.findAll({
+    let patients = await db.Patient.findAndCountAll({
       where: {},
       include: [{ model: db.Rdv }],
       order: [["id", "DESC"]],
@@ -51,17 +51,20 @@ function addPatient(db) {
           .status(400)
           .json({ status: "failed", error: errors.join(", ") });
           cin = parseInt(req.body.cin)
-      let newPatient = {
+      
+        cin = parseFloat(req.body.cin)
+      
+          let newPatient = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         cin: cin
       };
 
-      let patient = await db.Patient.create(newPatient);
+       await db.Patient.create(newPatient);
       res.send("create a patient");
-      return res.status(201).json({ status: "success", payload: patient });
+      return res.status(201).json("create a patient" );
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json(err,"cant add");
     }
   };
 }
@@ -118,11 +121,22 @@ function searchPatient(db) {
   };
 }
 
+
+  function countPatient(){
+    return async function(req,res)
+    {
+      let count = await db.Patient.findAndCountAll({
+        where : {},
+      })
+      return res.status(200).json({ payload : count})
+  }
+  }
 module.exports = {
   detailsPatient,
   listPatients,
   updatePatient,
   addPatient,
   deletePatient,
-  searchPatient
+  searchPatient,
+  countPatient
 };

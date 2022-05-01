@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Time from "../components/Time";
-export default function PatientList() {
+
+export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-
+  const [count, setCount] = useState();
+  
   useEffect(() => {
     async function getUser() {
       try {
@@ -17,8 +18,10 @@ export default function PatientList() {
           },
         });
 
-        let list = response.data;
-        setUsers(list);
+        let { rows } = response.data;
+        setUsers(rows);
+        let { count } = response.data;
+        setCount(count);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -31,11 +34,12 @@ export default function PatientList() {
   return (
     <div className="">
       <div>
-        <div className="text-right text-lg">
-          <Time></Time>
-        </div>
+        
       </div>
       <div className=" bg-gray-100">
+      <div className="font-bold leading-snug text-right px-2 py-2 ">
+         <span className="text-blue-800">{count} </span>  Users 
+        </div>
         <div className="px-5 py-5">
           <input
             autoComplete="off"

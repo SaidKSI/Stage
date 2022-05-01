@@ -23,7 +23,7 @@ module.exports = {
           model: "patients",
           key: "id"
         },
-        //onDelete : "CASCADE",
+        onDelete : "CASCADE",
         onUpdate: "CASCADE",
         allowNull: false
       }, 

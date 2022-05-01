@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHospital } from "@fortawesome/free-solid-svg-icons";
+import Time from "./Time";
 
 export default function MenuNavBar({ fixed }) {
   const visit =useRef()
@@ -13,6 +14,7 @@ export default function MenuNavBar({ fixed }) {
         <div className="w-full px-4">
           <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-[#6182af] rounded">
             <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+
               <div className="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
                 <Link to={"/"}>
                   <a
@@ -33,6 +35,9 @@ export default function MenuNavBar({ fixed }) {
                   type="button"
                   onClick={() => setMenuOpen(!menuOpen)}
                 ></button>
+              </div>
+              <div className="font-bold leading-snug text-white ">
+                <Time></Time>
               </div>
               <div
                 className={

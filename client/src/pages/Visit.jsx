@@ -9,7 +9,9 @@ import { Navigate } from "react-router-dom";
 export default function Visit() {
   const [visits, setVisit] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [count, setCount] = useState();
+  
 
   let { id } = useParams();
   useEffect(() => {
@@ -23,8 +25,10 @@ export default function Visit() {
           },
         });
 
-        let list = response.data;
-        setVisit(list);
+        let { rows } = response.data;
+        setVisit(rows);
+        let { count } = response.data;
+        setCount(count);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -37,12 +41,13 @@ export default function Visit() {
 
   return (
     <div>
-      <div className="text-right text-lg">
-        <Time></Time>
-      </div>
+      
     <div className="grid grid-rows-5 grid-cols-5 ">
       <div className="col-span-5 row-span-5">
         <div className=" bg-gray-100">
+        <div className="font-bold leading-snug text-right px-2 py-2 ">
+         <span className="text-blue-800">{count} </span>  Visits 
+        </div>
         <div className="px-5 py-5"> 
             <input
             autoComplete="off"

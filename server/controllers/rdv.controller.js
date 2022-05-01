@@ -62,7 +62,7 @@ function listRdvs(db){
    
     return async function (req,res) {
 
-        let rdvs= await db.Rdv.findAll(
+        let rdvs= await db.Rdv.findAndCountAll(
             {
                 where:{},
                 include: [{ model: db.Patient }],

@@ -35,15 +35,11 @@ function addVisit(db) {
 
 function listVisit(db) {
   return async function (req, res) {
-    let Visits = await db.Visit.findAll({
+    let Visits = await db.Visit.findAndCountAll({
       where: {},
       include: [{ model: db.Patient }],
       order: [["id", "DESC"]],
     });
-    // if(!["Docteur"].includes(req.role))
-    // {
-    //   return res.status(400).json({status : "failed" , error : "unauthorized"})
-    // }
     return res.json(Visits);
   };
 }

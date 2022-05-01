@@ -1,15 +1,15 @@
 const db = require("../models");
 const { generateAccessToken } = require("../middleware/utils");
-    //User Loging 
+//User Loging
 function login(db) {
   return async function (req, res) {
     let errors = [];
     if (!req.body.email) errors.push("Enter Ur Email");
     if (!req.body.password) errors.push("Enter Ur Password");
     if (errors.length > 0)
-    return res
-      .status(400)
-      .json({ status: "failed", error: errors.join(", ") });
+      return res
+        .status(400)
+        .json({ status: "failed", error: errors.join(", ") });
 
     let email = req.body.email;
     let password = req.body.password;
@@ -20,8 +20,15 @@ function login(db) {
       },
     });
     if (user) {
-      let token = generateAccessToken({ email: user.email , role : user.role });
-      return res.json({ status: "success", token: token , userid :user.id, role : user.role , firstName : user.firstName,lastName : user.lastName});
+      let token = generateAccessToken({ email: user.email, role: user.role });
+      return res.json({
+        status: "success",
+        token: token,
+        userid: user.id,
+        role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
     } else {
       return res
         .status(404)
@@ -31,21 +38,16 @@ function login(db) {
 }
 function getUser(db) {
   return async function (req, res) {
-
-    let user = await db.User.findAll({
+    let user = await db.User.findAndCountAll({
       where: {},
     });
-    if (user) {
-      
-      return res.json({ status: "success", payload: user });
-    } else {
-      return res
-        .status(404)
-        .json({ status: "failed", error: "user not found" });
-    }
+
+    return res.json(user );
   };
 }
-  
+
+
+
 function addUser(db) {
   return async function (req, res) {
     try {
@@ -55,19 +57,18 @@ function addUser(db) {
       if (!req.body.role) errors.push("no role");
       if (!req.body.password) errors.push("no last name");
       if (!req.body.email) errors.push("no last name");
-      
 
       if (errors.length > 0)
         return res
           .status(400)
           .json({ status: "failed", error: errors.join(", ") });
-          
+
       let newUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         role: req.body.role,
-        password : req.body.password,
-        email : req.body.email
+        password: req.body.password,
+        email: req.body.email,
       };
 
       let user = await db.User.create(newUser);
@@ -78,4 +79,4 @@ function addUser(db) {
     }
   };
 }
-module.exports = {login , getUser,addUser}
+module.exports = { login, getUser, addUser };

@@ -5,7 +5,9 @@ import Time from "../components/Time";
 export default function Paiment() {
   const [payments, setPayment] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [count, setCount] = useState();
+
 
   useEffect(() => {
     async function getPayments() {
@@ -17,8 +19,10 @@ export default function Paiment() {
           },
         });
 
-        let list = response.data;
-        setPayment(list);
+        let { rows } = response.data;
+        setPayment(rows);
+        let { count } = response.data;
+        setCount(count);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -30,12 +34,13 @@ export default function Paiment() {
   
   return (
     <div>
-      <div className="text-right text-lg">
-        <Time></Time>
-      </div>
+      
     <div className="grid grid-rows-5 grid-cols-5 ">
       <div className="col-span-5 row-span-5">
         <div className=" bg-gray-100">
+        <div className="font-bold leading-snug text-right px-2 py-2 ">
+         <span className="text-blue-800">{count} </span>  Payment 
+        </div>
         <div className="px-5 py-5"> 
             <input
             autoComplete="off"

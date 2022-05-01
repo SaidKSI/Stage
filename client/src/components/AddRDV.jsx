@@ -79,7 +79,7 @@ export default function AddRDV() {
                   Date de RDV
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   onChange={(e) => onInputChange(e)}
                   id="daterdv"
                   name="daterdv"
