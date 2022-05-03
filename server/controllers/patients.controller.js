@@ -12,8 +12,6 @@ function listPatients(db) {
   };
 }
 
-
-
 function detailsPatient(db) {
   return async function (req, res) {
     try {
@@ -30,13 +28,11 @@ function detailsPatient(db) {
       } else
         return res.status(404).json({ status: "failed", payload: "not found" });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
-
-
 
 function addPatient(db) {
   return async function (req, res) {
@@ -50,51 +46,66 @@ function addPatient(db) {
         return res
           .status(400)
           .json({ status: "failed", error: errors.join(", ") });
-          cin = parseInt(req.body.cin)
-      
-        cin = parseFloat(req.body.cin)
-      
-          let newPatient = {
+      parseInt();
+
+      dateN = new Date(req.body.dataN);
+
+      let newPatient = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        cin: cin
+        cin: req.body.cin,
+        dateN: dateN,
+        email: req.body.email,
+        gender: req.body.gender,
       };
 
-       await db.Patient.create(newPatient);
-      res.send("create a patient");
-      return res.status(201).json("create a patient" );
+      await db.Patient.create(newPatient);
+      //res.send("create a patient");
+      return res.status(201).json("create a patient");
     } catch (err) {
-      return res.status(500).json(err,"cant add");
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
 
-
-
 function updatePatient(db) {
-  return function (req, res) {
-    return response.json("");
+  return async function (req, res) {
+    try {
+      let id = parseInt(req.params.id);
+      dateN = new Date(req.body.dataN);
+     
+        await db.Patient.update(
+          {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            cin: req.body.cin,
+            dateN: dateN,
+            email: req.body.email,
+            gender: req.body.gender
+          },
+          {
+            where: { id: id }
+          }
+        );
+     
+        return res.status(201).json("patient has been updated");
+    } catch (err) {
+      console.log(err);
+      return res.status(204).json({ status: "failed", payload: err });
+    }
   };
 }
-
-
 
 function deletePatient(db) {
   return async function (req, res) {
     try {
       let id = parseInt(req.params.id);
-  //     let deleteVisits= await db.Visit.db ({
-  //           where : {	patientId : id}
-  //     });
-  //     let deleteRdvs= await db.Rdv.db ({
-  //       where : {	patientId : id}
-  // });
       await db.Patient.destroy({
         where: { id: id },
       });
-      return res.json("patient deleted");
+      return res.json({ satatus: 200, payload: "patient deleted" });
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
@@ -115,22 +126,21 @@ function searchPatient(db) {
       } else
         return res.status(404).json({ status: "failed", payload: "not found" });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
 
+function countPatient() {
+  return async function (req, res) {
+    let count = await db.Patient.findAndCountAll({
+      where: {},
+    });
+    return res.status(200).json({ payload: count });
+  };
+}
 
-  function countPatient(){
-    return async function(req,res)
-    {
-      let count = await db.Patient.findAndCountAll({
-        where : {},
-      })
-      return res.status(200).json({ payload : count})
-  }
-  }
 module.exports = {
   detailsPatient,
   listPatients,
@@ -138,5 +148,5 @@ module.exports = {
   addPatient,
   deletePatient,
   searchPatient,
-  countPatient
+  countPatient,
 };

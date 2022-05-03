@@ -1,5 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
+import { useState , useRef } from "react";
+import Snackbar from "./Notification";
+
+
+const SnackbarType = {
+  success: "success",
+  fail: "fail",
+};
+
 
 export default function AddVisit() {
   const [patientId, setPatientId] = useState("");
@@ -7,6 +16,13 @@ export default function AddVisit() {
   const [interrogatoire, setinterrogatoire] = useState("");
   const [conclusion, setConclusion] = useState("");
   const [prix, setPrix] = useState("");
+  const [result, setResult] = useState();
+  const [msg, setMsg] = useState("");
+  
+
+  const snackbarRef = useRef(null);
+ 
+ 
   function onInputChange(e) {
     if (e.target.name === "patientId") setPatientId(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
@@ -38,6 +54,15 @@ export default function AddVisit() {
      
       
     );
+    if (response.status === "failed" )
+    {
+      setResult(SnackbarType.fail)
+      setMsg("something went wrong")
+      return result , msg
+    }
+      setResult(SnackbarType.success)
+      setMsg("patient added")
+      return result , msg
   }
   
   return (
@@ -140,6 +165,11 @@ export default function AddVisit() {
                 >
                   Save
                 </button>
+                <Snackbar
+        ref={snackbarRef}
+        message={msg}
+        type={result}
+      />
               </div>
             </div>
           </form>

@@ -28,7 +28,7 @@ function addVisit(db) {
 
       return res.status(201).json({ status: "success", payload: visit });
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
@@ -54,7 +54,7 @@ function deleteVisit(db) {
       });
       return res.json(deleted);
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
@@ -79,6 +79,21 @@ function detailsVisit(db) {
         return res.status(404).json({ status: "failed", payload: "not found" });
     } catch (err) {
       console.log(err);
+      return res.status(500).json({ status: "failed", payload: err });
+    }
+  };
+}
+
+
+function deleteVisit(db) {
+  return async function (req, res) {
+    try {
+      let id = parseInt(req.params.id);
+      await db.Visit.destroy({
+        where: { id:id },
+      });
+      return res.json({status : 200,payload :"Visit deleted"});
+    } catch (err) {
       return res.status(500).json({ status: "failed", payload: err });
     }
   };

@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
-import jsonUsersList from "../params/users.json";
+
 
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   let navigate = useNavigate();
 

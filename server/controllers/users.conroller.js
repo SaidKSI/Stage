@@ -55,8 +55,8 @@ function addUser(db) {
       if (!req.body.firstName) errors.push("no first name");
       if (!req.body.lastName) errors.push("no last name");
       if (!req.body.role) errors.push("no role");
-      if (!req.body.password) errors.push("no last name");
-      if (!req.body.email) errors.push("no last name");
+      if (!req.body.password) errors.push("no password");
+      if (!req.body.email) errors.push("no email");
 
       if (errors.length > 0)
         return res
@@ -75,8 +75,23 @@ function addUser(db) {
       res.send("create a User");
       return res.status(201).json({ status: "success", payload: user });
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
-module.exports = { login, getUser, addUser };
+
+
+function deleteUser(db) {
+  return async function (req, res) {
+    try {
+      let id = parseInt(req.params.id);
+      await db.User.destroy({
+        where: { id:id },
+      });
+      return res.json({status : 200,payload :"user deleted"});
+    } catch (err) {
+      return res.status(500).json({ status: "failed", payload: err });
+    }
+  };
+}
+module.exports = { login, getUser, addUser,deleteUser };

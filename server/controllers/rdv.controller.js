@@ -32,7 +32,7 @@ function addRdv(db){
 
     }
     catch(err){
-        return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
     }
     
@@ -73,4 +73,19 @@ function listRdvs(db){
         return res.json(rdvs) 
     }
 }
-module.exports={addRdv,listRdvs}
+
+
+function deleteRdv(db) {
+    return async function (req, res) {
+      try {
+        let id = parseInt(req.params.id);
+        await db.Rdv.destroy({
+          where: { id:id },
+        });
+        return res.json({status : 200,payload :"rdv deleted"});
+      } catch (err) {
+        return res.status(500).json({ status: "failed", payload: err });
+      }
+    };
+  }
+module.exports={addRdv,listRdvs ,deleteRdv}

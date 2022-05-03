@@ -24,6 +24,7 @@ module.exports = {
           model: "visits",
           key: "id",
         },
+        onDelete : "CASCADE",
         onUpdate: "CASCADE",
         allowNull: false,
       },

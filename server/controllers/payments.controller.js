@@ -69,14 +69,26 @@ function addPayment(db) {
 
       return res.status(201).json({ status: "success", payload: payment });
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
 
 
 
-
+function deletePayment(db) {
+  return async function (req, res) {
+    try {
+      let id = parseInt(req.params.id);
+      await db.Payment.destroy({
+        where: { id:id },
+      });
+      return res.json({status : 200,payload :"payment deleted"});
+    } catch (err) {
+      return res.status(500).json({ status: "failed", payload: err });
+    }
+  };
+}
 
 
 
@@ -216,4 +228,4 @@ function addPayment(db) {
 
 // }
 
-module.exports = { listPayment, addPayment };
+module.exports = { listPayment, addPayment,deletePayment };

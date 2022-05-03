@@ -1,13 +1,15 @@
 import axios from "axios";
-import React from "react";
-import { useState, useRef } from "react";
+import dateFormat from "dateformat";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Snackbar from "./Notification";
 
 const SnackbarType = {
   success: "success",
   fail: "fail",
 };
-export default function AddPatient() {
+export default function PatientDetails() {
+
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [cin, setcin] = useState("");
@@ -18,7 +20,15 @@ export default function AddPatient() {
   const [msg, setMsg] = useState("");
 
   const snackbarRef = useRef(null);
+  const [patient, setPatient] = useState(null);
+  const [loading, setLoading] = useState(false);
+  let firstNameref = useRef();
+  let lastNameref = useRef();
+  let cinref = useRef();
+  let savebutton = useRef();
+  let updatebutton = useRef();
 
+  let { id } = useParams();
   function onInputChange(e) {
     if (e.target.name === "firstName") setfirstName(e.target.value);
     else if (e.target.name === "lastName") setlastName(e.target.value);
@@ -27,12 +37,73 @@ export default function AddPatient() {
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "dateN") setDateN(e.target.value);
   }
-  async function onSubmit(e) {
-    snackbarRef.current.show();
-    e.preventDefault();
+  // get one Patient
+  async function getPatient(patientId) {
+    try {
+      setLoading(true);
+      let response = await axios.get(
+        "http://localhost:8000/patients/" + patientId,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
 
-    let response = await axios.post(
-      "http://localhost:8000/patients/addpatient",
+      let { payload } = response.data;
+      setPatient(payload);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    try {
+      let pid = parseInt(id);
+      getPatient(pid);
+    } catch (err) {
+      alert("not found");
+    }
+  }, []);
+  // update
+  //  function update()
+  // {
+
+  //   firstNameref.disabled = false
+  //   lastNameref.disabled = false
+  //   cinref.disabled = false
+  //   updatebutton.disabled = true
+  //   savebutton.hidden = false
+
+  // }
+
+  // async function saveupdate(patientId) {}
+  // delet
+  async function delet(patientId) {
+    try {
+      let response = await axios.get(
+        "http://localhost:8000/patient/" + patientId,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+      alert("patient has been deleted");
+
+      <Navigate to={"/patients"} />;
+    } catch (err) {
+      alert("error");
+    }
+  }
+
+  async function onSubmit(patientId) {
+    snackbarRef.current.show();
+    patientId.preventDefault();
+
+    let response = await axios.put(
+      "http://localhost:8000/patients/"+patientId,
       {
         firstName: firstName,
         lastName: lastName,
@@ -56,22 +127,25 @@ export default function AddPatient() {
     setMsg("patient added");
     return result, msg;
   }
-
-  return (
+  return loading ? (
+    <div>loading...</div>
+  ) : (
     <div>
-      <div className="mt-10 sm:mt-0">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="md:col-span-1">
-            <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Patient Informations
-              </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                Add your new patient to the database
-              </p>
-            </div>
-          </div>
-          <div className="mt-5 md:mt-0 md:col-span-2">
+      {patient ? (
+        <div>
+          <div className="mt-10 sm:mt-0">
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+              <div className="md:col-span-1">
+                <div className="px-4 sm:px-0">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    Patient Informations
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600">
+                    Add your new patient to the database
+                  </p>
+                </div>
+              </div>
+              <div className="mt-5 md:mt-0 md:col-span-2">
             <form action="#" method="POST">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5  sm:p-6">
@@ -88,7 +162,7 @@ export default function AddPatient() {
                         id="firstName"
                         onChange={(e) => onInputChange(e)}
                         name="firstName"
-                        value={firstName}
+                        value={patient.firstName}
                         className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -103,7 +177,7 @@ export default function AddPatient() {
                       <input
                         type="text"
                         onChange={(e) => onInputChange(e)}
-                        value={lastName}
+                        value={patient.lastName}
                         id="lastName"
                         name="lastName"
                         className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -119,7 +193,7 @@ export default function AddPatient() {
                       <input
                         type="text"
                         onChange={(e) => onInputChange(e)}
-                        value={cin}
+                        value={patient.cin}
                         id="cin"
                         name="cin"
                         autoComplete="cin-name"
@@ -137,7 +211,7 @@ export default function AddPatient() {
                       <input
                         type="date"
                         onChange={(e) => onInputChange(e)}
-                        value={dateN}
+                        value={patient.dateN}
                         id="dateN"
                         name="dateN"
                         autoComplete="cin-name"
@@ -155,7 +229,7 @@ export default function AddPatient() {
                       <input
                         type="text"
                         onChange={(e) => onInputChange(e)}
-                        value={email}
+                        value={patient.email}
                         id="email"
                         name="email"
                         className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -204,7 +278,7 @@ export default function AddPatient() {
                     <button
                       type="submit"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={(e) => onSubmit(e)}
+                      onClick={(e) => onSubmit(patient.id)}
                     >
                       Save
                     </button>
@@ -214,33 +288,22 @@ export default function AddPatient() {
               </div>
             </form>
           </div>
+            </div>
+          </div>
+          
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
 
-{
-  /* <div className="">
-  <div className="px-4 py-3  text-right sm:px-6">
-    <button
-      type="submit"
-      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      onClick={handleCloseDialog}
-    >
-      Save
-    </button>
-  </div>
-  {isShowDialog && (
-    <Dialog
-      title={"Dialog Title"}
-      handleCloseDialog={handleCloseDialog}
-      actionsPannel={DialogActions("bg-blue")}
-      size={"w-2/7"}
-      color={"bg-green"}
-    >
-      Dialog Content goes here...
-    </Dialog>
-  )}
-</div>; */
-}
+// new Intl.DateTimeFormat("en-US", {
+//   year: "numeric",
+//   month: "2-digit",
+//   day: "2-digit",
+//   hour: "2-digit",
+//   minute: "2-digit",
+//   second: "2-digit",
+// }).format(daterdv)

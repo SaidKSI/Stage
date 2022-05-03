@@ -6,12 +6,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       cin: {
         type: Sequelize.STRING,
-        unique : true,
-        allowNull : false
+        unique: true,
+        allowNull: false,
       },
       firstName: {
         type: Sequelize.STRING,
@@ -19,6 +19,17 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING,
       },
+      gender: {
+        type: Sequelize.STRING,
+        isIn: [['Homme', 'Femme']],
+      },
+      dateN: {
+        type: Sequelize.DATE,
+      },
+      email: {
+        type: Sequelize.STRING,
+      },
+      
 
       createdAt: {
         allowNull: false,
@@ -29,7 +40,6 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("patients");

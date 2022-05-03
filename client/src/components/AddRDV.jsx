@@ -1,16 +1,29 @@
 import axios from "axios";
-import React,{ useState } from "react";
+import React from "react";
+import { useState , useRef } from "react";
+import Snackbar from "./Notification";
 
 
+
+const SnackbarType = {
+  success: "success",
+  fail: "fail",
+};
 export default function AddRDV() {
-  const [patientId, setpatientId] = useState("");
+  const [patientCin, setPatientCin] = useState("");
   const [motif, setmotif] = useState("");
-  const [daterev, setdaterev] = useState("");
+  const [daterdv, setdaterev] = useState("");
+  const [result, setResult] = useState();
+  const [msg, setMsg] = useState("");
+  
+
+  const snackbarRef = useRef(null);
+
 
   function onInputChange(e) {
-    if (e.target.name === "firstName") setpatientId(e.target.value);
-    else if (e.target.name === "lastName") setmotif(e.target.value);
-    else if (e.target.name === "cin") setdaterev(e.target.value);
+    if (e.target.name === "firstName") setPatientCin(e.target.value);
+    else if (e.target.name === "motif") setmotif(e.target.value);
+    else if (e.target.name === "daterdv") setdaterev(e.target.value);
   }
   async function onSubmit(e) {
     e.preventDefault();
@@ -18,16 +31,25 @@ export default function AddRDV() {
     let response = await axios.post(
       "http://localhost:8000/rdv",
       {
-        patientId: patientId,
+        patientCin: patientCin,
         motif: motif,
-        daterev: daterev
+        daterdv: daterdv
       },
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("user_token"),
         }
       }
-    ); //console.log(response)
+    ); 
+    if (response.status === "failed" )
+    {
+      setResult(SnackbarType.fail)
+      setMsg("something went wrong")
+      return result , msg
+    }
+      setResult(SnackbarType.success)
+      setMsg("patient added")
+      return result , msg
   }
 
   return (
@@ -39,17 +61,17 @@ export default function AddRDV() {
             <div className="shadow overflow-hidden sm:rounded-md ">
               <div className="  sm:p-3">
                 <label
-                  htmlFor="patientId"
+                  htmlFor="patientCin"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  PatientID
+                  Patient C.I.N
                 </label>
                 <input
                   type="text"
-                  id="patientId"
+                  id="patientCin"
                   onChange={(e) => onInputChange(e)}
-                  name="patientId"
-                  autoComplete="patientId-name"
+                  name="patientCin"
+                  autoComplete="patientCin-name"
                   className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -68,7 +90,7 @@ export default function AddRDV() {
                   name="motif"
                   autoComplete="motif-name"
                   className="mt-1 block w-[50%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                ></textarea>
+                />
               </div>
               <br></br>
               <div className=" sm:p-3">
@@ -94,6 +116,11 @@ export default function AddRDV() {
                 >
                   Save
                 </button>
+                <Snackbar
+        ref={snackbarRef}
+        message={msg}
+        type={result}
+      />
               </div>
             </div>
           </form>

@@ -6,6 +6,13 @@ import Time from "./Time";
 
 export default function MenuNavBar({ fixed }) {
   const visit =useRef()
+  const user = useRef()
+  
+  const role = localStorage.getItem("role")
+ 
+
+ 
+
   const [menuOpen, setMenuOpen] = React.useState(false);
   const navigate = useNavigate();
   return (
@@ -57,17 +64,18 @@ export default function MenuNavBar({ fixed }) {
                       </a>
                     </Link>
                   </li>
-                  <li className="nav-item">
+                 { role !== "Assistance" ?<li className="nav-item">
                     <Link to={"/visits"}>
                       <a
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href="/Visit"
+                        ref={visit}
                        
                       >
                         Visit
                       </a>
                     </Link>
-                  </li>
+                  </li>: null }
                   <li className="nav-item">
                     <Link to={"/rdvs"}>
                       <a
@@ -88,15 +96,16 @@ export default function MenuNavBar({ fixed }) {
                       </a>
                     </Link>
                   </li>
-                  <Link to={"/users"}>
+                   { role === "Admin" ?  <Link to={"/users"}>
                   <li className="nav-item">
                     <a
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                       href=""
+                    
                     >
                       Users
                     </a>
-                  </li></Link>
+                  </li></Link>: null }
                   <li className="nav-item">
                     <a
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"

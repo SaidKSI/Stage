@@ -1,5 +1,14 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React from "react";
+import { useState , useRef } from "react";
+import Snackbar from "./Notification";
+
+
+
+const SnackbarType = {
+  success: "success",
+  fail: "fail",
+};
 
 export default function Adduser() {
   const [firstName, setFirstName] = useState();
@@ -7,6 +16,12 @@ export default function Adduser() {
   const [role, setRole] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [result, setResult] = useState();
+  const [msg, setMsg] = useState("");
+  
+
+
+  const snackbarRef = useRef(null);
 
   function onInputChange(e) {
     if (e.target.name === "firstName") setFirstName(e.target.value);
@@ -31,6 +46,15 @@ export default function Adduser() {
         },
       }
     );
+    if (response.status === "failed" )
+    {
+      setResult(SnackbarType.fail)
+      setMsg("something went wrong")
+      return result , msg
+    }
+      setResult(SnackbarType.success)
+      setMsg("patient added")
+      return result , msg
   }
   return (
     <div>
@@ -172,6 +196,11 @@ export default function Adduser() {
                     >
                       Save
                     </button>
+                    <Snackbar
+        ref={snackbarRef}
+        message={msg}
+        type={result}
+      />
                   </div>
                 </div>
               </div>

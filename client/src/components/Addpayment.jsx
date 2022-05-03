@@ -1,10 +1,23 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useState , useRef } from "react";
+import Snackbar from "./Notification";
 
+
+const SnackbarType = {
+  success: "success",
+  fail: "fail",
+};
 export default function Addpayment() {
   const [patientId, setpatientId] = useState("");
   const [visitId, setvisitId] = useState("");
   const [montant, setmontant] = useState("");
+  const [result, setResult] = useState();
+  const [msg, setMsg] = useState("");
+  
+
+
+  const snackbarRef = useRef(null);
   
 
   function onInputChange(e) {
@@ -30,6 +43,15 @@ export default function Addpayment() {
         },
       }
     );
+    if (response.status === "failed" )
+    {
+      setResult(SnackbarType.fail)
+      setMsg("something went wrong")
+      return result , msg
+    }
+      setResult(SnackbarType.success)
+      setMsg("patient added")
+      return result , msg
   }
 
   return (
@@ -96,6 +118,11 @@ export default function Addpayment() {
                 >
                   Save
                 </button>
+                <Snackbar
+        ref={snackbarRef}
+        message={msg}
+        type={result}
+      />
               </div>
             </div>
           </form>
