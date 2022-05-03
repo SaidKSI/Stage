@@ -27,6 +27,7 @@ export default function AddPatient() {
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "dateN") setDateN(e.target.value);
   }
+  
   async function onSubmit(e) {
     snackbarRef.current.show();
     e.preventDefault();
@@ -39,7 +40,7 @@ export default function AddPatient() {
         cin: cin,
         gender: gender,
         email: email,
-        password: dateN,
+        password: dateN
       },
       {
         headers: {
