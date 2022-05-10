@@ -10,8 +10,8 @@ module.exports = {
       },
       cin: {
         type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
+        unique: true ,
+        allowNull: false
       },
       firstName: {
         type: Sequelize.STRING,

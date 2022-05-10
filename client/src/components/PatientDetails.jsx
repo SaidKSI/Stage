@@ -1,17 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams,Link } from "react-router-dom";
-
-
+import { useParams, Link } from "react-router-dom";
+import Loader from "./Loading";
 
 export default function PatientDetails() {
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-
-
-
-  
 
   let { id } = useParams();
   useEffect(() => {
@@ -43,27 +37,11 @@ export default function PatientDetails() {
     }
   }
 
-  
-
-
-
-  
-
- 
-  
-
-
-
- 
-  
-  
-  
-  
-   
-
-  
   return loading ? (
-    <div>loading...</div>
+    <div>
+      {" "}
+      <Loader />{" "}
+    </div>
   ) : (
     <div>
       {patient ? (
@@ -94,7 +72,7 @@ export default function PatientDetails() {
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">Gender</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                 {patient.gender}
+                    {patient.gender}
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -102,35 +80,32 @@ export default function PatientDetails() {
                     Date de Naissance
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                     {new Date(patient.dateN).toDateString()}
+                    {new Date(patient.dateN).toDateString()}
                   </dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
-                  Email address 
+                    Email address
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {patient.email}
+                    {patient.email}
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">
-                  
+                  <div className="">
+                        <Link to={"/patients/patientcontact/" + patient.id}>
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          >
+                            Contact Patients
+                          </button>
+                        </Link>
+                        </div>
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  <div className="py-3">
-          <Link to={"/patients/updatepatients/"+ patient.id}>
-            <button
-              type="submit"
-              className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Modifier
-            </button>
-          </Link>
-        </div>
-                  </dd>
                 </div>
-               
+
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">RDV</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -147,7 +122,6 @@ export default function PatientDetails() {
                                 Full Name
                               </th>
                               <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
-                                
                                 Date
                               </th>
                               <th className="p-3 w-9/12 text-sm font-semibold tracking-wide text-left whitespace-nowrap">

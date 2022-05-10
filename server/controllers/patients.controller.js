@@ -1,4 +1,7 @@
 const db = require("../models");
+const nodemailer = require('nodemailer')
+const bodyParser = require('body-parser')
+
 
 function listPatients(db) {
   return async function (req, res) {
@@ -48,13 +51,13 @@ function addPatient(db) {
           .json({ status: "failed", error: errors.join(", ") });
       parseInt();
 
-      dateN = new Date(req.body.dataN);
+      
 
       let newPatient = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         cin: req.body.cin,
-        dateN: dateN,
+        dateN: req.body.dateN,
         email: req.body.email,
         gender: req.body.gender,
       };
@@ -91,7 +94,7 @@ function updatePatient(db) {
         return res.status(201).json("patient has been updated");
     } catch (err) {
       console.log(err);
-      return res.status(204).json({ status: "failed", payload: err });
+      return res.status(204).json({ status: "failed"});
     }
   };
 }
@@ -140,6 +143,43 @@ function countPatient() {
     return res.status(200).json({ payload: count });
   };
 }
+
+function contactPatient(db) {
+  return async function (req, res) {
+    let { text } = req.body
+	const transport = nodemailer.createTransport({
+		host: process.env.MAIL_HOST,
+		port: process.env.MAIL_PORT,
+		auth: {
+			user: process.env.MAIL_USER,
+			pass: process.env.MAIL_PASS
+		}
+	})
+
+	await transport.sendMail({
+		from: process.env.MAIL_FROM,
+		to: "test@test.com",
+		subject: "test email",
+		html: `<div className="email" style="
+        border: 1px solid black;
+        padding: 20px;
+        font-family: sans-serif;
+        line-height: 2;
+        font-size: 20px; 
+        ">
+        <h2>Here is your email!</h2>
+        <p>${text}</p>
+    
+        <p>All the best, Darwin</p>
+         </div>
+    `
+	})
+  };
+}
+
+
+
+
 
 module.exports = {
   detailsPatient,

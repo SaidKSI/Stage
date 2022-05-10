@@ -46,14 +46,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 
 ###
 ###
-POST    http://localhost:8000/rdv
+POST    http://localhost:8000/rdvs/addrdv
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MTI2NjU0OX0.sQhmhRPg8JBRSKF4ZXrYbau0Wb2CFGqdkzH-2IpNcZY
 
 {
     "patientId": 1,
     "motif": "skhana",
-    "date": "2022/04/22" 
+    "daterdv": "2022/04/22" 
 }
 
 ###
@@ -62,6 +62,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 {
+   
     "motif": "Fever",
     "interrogatoire": "dolo",
     "conclusion": "Dwa",
@@ -172,4 +173,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
     "cin" : 285,
     "email":"yahya@gmail.com",
     "gender" : "Homme"
+}
+#####
+   
+POST    http://localhost:8000/contactpatient
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+{
+    "email": "mu.ou540@gmail.com",
+    "subject": "ara flos"
 }

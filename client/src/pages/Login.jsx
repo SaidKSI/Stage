@@ -21,7 +21,7 @@ export default function Login() {
 
     try {
       let response = await axios.post("http://localhost:8000/login", {
-        email: email,
+        email: email.trim(),
         password: password,
       });
       let role = response.data.role;

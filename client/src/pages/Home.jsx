@@ -4,6 +4,7 @@ import PatientList from "./PatientList";
 import Allrdv from "./Allrdv";
 import Visit from "./Visit";
 import Paiment from "./Paiment";
+import BarChart from "../components/Graph";
 
 export default function Home() {
   
@@ -19,8 +20,8 @@ export default function Home() {
           <CurrentTime></CurrentTime>
         </div>
       </div>
-
-      <div className="py-4">
+      {/* <BarChart /> */}
+      {/* <div className="py-4">
       
         <PatientList></PatientList>
       </div>
@@ -35,7 +36,7 @@ export default function Home() {
       <div className="py-4">
         
         <Paiment></Paiment>
-      </div>
+      </div> */}
     </div>
   );
 }

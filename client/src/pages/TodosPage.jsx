@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import H1 from "../components/H1";
-import Menu from "../components/Menu";
 import Todos from "../components/Todos";
 
 export default function TodosPage() {

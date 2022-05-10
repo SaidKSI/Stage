@@ -17,6 +17,7 @@ export default function AddPatient() {
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
 
+
   const snackbarRef = useRef(null);
 
   function onInputChange(e) {
@@ -26,10 +27,13 @@ export default function AddPatient() {
     else if (e.target.name === "gender") setGender(e.target.value);
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "dateN") setDateN(e.target.value);
+   
+
   }
   
   async function onSubmit(e) {
-    snackbarRef.current.show();
+    window.location.reload();
+    try {snackbarRef.current.show();
     e.preventDefault();
 
     let response = await axios.post(
@@ -40,7 +44,7 @@ export default function AddPatient() {
         cin: cin,
         gender: gender,
         email: email,
-        password: dateN
+        dateN: dateN
       },
       {
         headers: {
@@ -48,16 +52,17 @@ export default function AddPatient() {
         },
       }
     );
-    if (response.status === "failed") {
+    
+    setResult(SnackbarType.success);
+      setMsg("patient added");
+      return result, msg;
+    }
+    catch {
       setResult(SnackbarType.fail);
       setMsg("something went wrong");
       return result, msg;
     }
-    setResult(SnackbarType.success);
-    setMsg("patient added");
-    return result, msg;
   }
-
   return (
     <div>
       <div className="mt-10 sm:mt-0">
@@ -85,6 +90,7 @@ export default function AddPatient() {
                         First name
                       </label>
                       <input
+                      required
                         type="text"
                         id="firstName"
                         onChange={(e) => onInputChange(e)}
@@ -103,6 +109,8 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
+                      required
+
                         onChange={(e) => onInputChange(e)}
                         value={lastName}
                         id="lastName"
@@ -119,6 +127,8 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
+                      required
+
                         onChange={(e) => onInputChange(e)}
                         value={cin}
                         id="cin"
@@ -137,6 +147,8 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="date"
+                      required
+
                         onChange={(e) => onInputChange(e)}
                         value={dateN}
                         id="dateN"
@@ -155,6 +167,8 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
+                      required
+
                         onChange={(e) => onInputChange(e)}
                         value={email}
                         id="email"
@@ -164,39 +178,40 @@ export default function AddPatient() {
                     </div>
 
                     <br />
-                    <div className="flex justify-evenly  col-span-6 sm:col-span-3">
-                      <div>
-                        <label
-                          htmlFor="Homme"
-                          className="block text-sm font-medium text-gray-700"
-                          for="Homme"
-                        >
-                          Homme
-                        </label>
-                        <input
-                          type="radio"
-                          id="Homme"
-                          value={"Homme"}
-                          name="Homme"
-                          onClick={() => setGender("Male")}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="Femme"
-                          className="block text-sm font-medium text-gray-700"
-                          for="Femme"
-                        >
+                    <div className="col-span-6 px-10 sm:col-span-3 lg:col-span-2">
+                      <label
+                        htmlFor="role"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Gender
+                      </label>
+                      <select
+                        className="form-select appearance-none
+                        block
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        aria-label="Default select example "
+                        name="gender"
+                        value={gender}
+                        onChange={(e) => onInputChange(e)}
+                      >
+                        <option value="Male" className="">
+                          Male
+                        </option>
+                        <option value="Femme" className=" ">
                           Femme
-                        </label>
-                        <input
-                          type="radio"
-                          value={"Femme"}
-                          id="Femme"
-                          name="Femme"
-                          onClick={() => setGender("Femme")}
-                        />
-                      </div>
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>

@@ -18,7 +18,6 @@ function listPayment(db) {
   };
 }
 
-
 function addPayment(db) {
   return async function (req, res) {
     try {
@@ -30,16 +29,11 @@ function addPayment(db) {
         return res
           .status(400)
           .json({ status: "failed", error: errors.join(", ") });
-            
-          
-          
-          
+
       let patientId = parseInt(req.body.patientId);
       let visitId = parseInt(req.body.visitId);
       let montant = parseFloat(req.body.montant);
-     
-     
-     
+
       // let Payments = await db.Payment.findOne({
       //   where: {id:visitId},
       //   include: [
@@ -49,20 +43,17 @@ function addPayment(db) {
       //     {
       //       model: db.Visit,
       //     }
-          
+
       //   ],
       // });
 
-      
-
-          // get visit with payments list 
-          // if not excet add new payment with rest = prix[visit] - montant   
-      // let rest = montant - 
+      // get visit with payments list
+      // if not excet add new payment with rest = prix[visit] - montant
+      // let rest = montant -
       let newPayment = {
         patientId: patientId,
         visitId: visitId,
-        montant: montant
-   
+        montant: montant,
       };
 
       let payment = await db.Payment.create(newPayment);
@@ -74,46 +65,19 @@ function addPayment(db) {
   };
 }
 
-
-
 function deletePayment(db) {
   return async function (req, res) {
     try {
       let id = parseInt(req.params.id);
       await db.Payment.destroy({
-        where: { id:id },
+        where: { id: id },
       });
-      return res.json({status : 200,payload :"payment deleted"});
+      return res.json({ status: 200, payload: "payment deleted" });
     } catch (err) {
       return res.status(500).json({ status: "failed", payload: err });
     }
   };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // function addPayment(db) {
 //   return async function (req, res) {
@@ -126,39 +90,38 @@ function deletePayment(db) {
 //         return res
 //           .status(400)
 //           .json({ status: "failed", error: errors.join(", ") });
-              
+
 //           let id = parseInt(req.params.id);
-        
+
 //       let patientId = parseInt(req.body.patientId);
 //       let visitId = parseInt(req.body.visitId);
 //       let montant = parseFloat(req.body.montant);
-      
-      
+
 //       let Payments = await db.Payment.findOne({
 //         where: {id:id},
 //         include: [
 //           {
 //             model: db.Patient,
 //           },
-          
+
 //         ],
 //       });
-//           // get visit with payments list 
-//           // if not excet add new payment with rest = prix[visit] - montant   
+//           // get visit with payments list
+//           // if not excet add new payment with rest = prix[visit] - montant
 //       // let rest = montant -
 //       let newPayment = {
 //         patientId: patientId,
 //         visitId: visitId,
 //         montant: montant,
-        
+
 //       };
- 
+
 //       if (!Payments) {
 //         let payment = await db.Payment.create(newPayment);
 
 //         return res.status(201).json({ status: "success", payload: "create a new payment" });
 //       } else {
-//         let payment = await db.Payment.update({newPayment}, 
+//         let payment = await db.Payment.update({newPayment},
 //           {where:{id:id}
 //         });
 //         return res.status(201).json({ status: "success", payload: "update a payments" });
@@ -170,29 +133,6 @@ function deletePayment(db) {
 //   };
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // function addPayment(db) {
 //   return async function (req, res) {
 //     try {
@@ -201,8 +141,6 @@ function deletePayment(db) {
 //       let montant = parseFloat(req.body.montant);
 //       let prix = parseFloat(req.body.prix);
 
-
-     
 //       let visit = await db.Visit.update({
 //         rest : prix  ,
 //         montant : montant,
@@ -216,10 +154,8 @@ function deletePayment(db) {
 //         ],
 //       });
 
-      
-        
 //         return res.json({ status: "success", payload: visit });
-     
+
 //     } catch (err) {
 //       console.log(err);
 //       return res.status(500).json({ status: "failed", payload: err });
@@ -228,4 +164,4 @@ function deletePayment(db) {
 
 // }
 
-module.exports = { listPayment, addPayment,deletePayment };
+module.exports = { listPayment, addPayment, deletePayment };

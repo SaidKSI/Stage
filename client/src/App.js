@@ -30,6 +30,7 @@ import VisitDetails from "./components/VisitDetails";
 import Adduser from "./components/Adduser"
 import Users from "./pages/Users"
 import UpdatePatients from "./components/UpdatePatient";
+import PatientContact from "./components/PatientContact";
 
 
 
@@ -47,7 +48,8 @@ function App() {
       <Route path="/patients" element={<Privateroute><Layout><PatientList /></Layout></Privateroute>} /> 
       <Route path="/patients/addpatient" element={<Privateroute><Layout><AddPatient /></Layout></Privateroute>} /> 
       <Route path="/patients/:id" element={<Privateroute><Layout><PatientDetails /></Layout></Privateroute>} /> 
-      <Route path="/patients/updatepatients/:id" element={<Privateroute><Layout><UpdatePatients /></Layout></Privateroute>} /> 
+      <Route path="/patients/updatepatient/:id" element={<Privateroute><Layout><UpdatePatients /></Layout></Privateroute>} /> 
+      <Route path="/patients/patientcontact/:id" element={<Privateroute><Layout><PatientContact /></Layout></Privateroute>} /> 
       
       
                         {/* Visits */}

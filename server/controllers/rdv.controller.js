@@ -1,47 +1,39 @@
 const db = require("../models");
- 
 
+function addRdv(db) {
+  return async function (req, res) {
+    try {
+      let errors = [];
+      if (!req.body.motif) errors.push("no motif");
+      if (!req.body.patientId) errors.push("no patient Id");
+      if (!req.body.daterdv) errors.push("no date");
 
-function addRdv(db){
+      if (errors.length > 0)
+        return res
+          .status(400)
+          .json({ status: "failed", error: errors.join(", ") });
 
-    return async function (req,res) {
-        try{ 
-        let errors=[];
-        if(!req.body.motif) errors.push("no motif")
-        if(!req.body.patientId) errors.push("no patient Id")
-        if(!req.body.date) errors.push("no date")
+      let patientId = parseInt(req.body.patientId);
 
-        if(errors.length>0)
-        return res.status(400).json({status:"failed",error: errors.join(", ")})
-
-        let patientId=parseInt(req.body.patientId)
-
-        let date=new Date(req.body.date);
- 
-        let newRdv={
-            motif:req.body.motif,
-            
-            daterdv: date,
-            patientId:patientId
-        }
       
-        let rdv= await db.Rdv.create(newRdv)
 
+      let newRdv = {
+        motif: req.body.motif,
+        daterdv:req.body.daterdv,
+        patientId: patientId,
+      };
 
-        return res.status(201).json({status:"success",payload: rdv});
+      let rdv = await db.Rdv.create(newRdv);
 
-    }
-    catch(err){
+      return res.status(201).json({ status: "success", payload: rdv });
+    } catch (err) {
       return res.status(500).json({ status: "failed", payload: err });
     }
-    }
-    
-} 
-
+  };
+}
 
 // function listRdv(db){
 
-   
 //     return async function (req,res) {
 
 //         let rdvs= await db.Rdv.findAll(
@@ -54,38 +46,32 @@ function addRdv(db){
 //            }
 //         );
 
-//         return res.json(rdvs) 
+//         return res.json(rdvs)
 //     }
 // }
-function listRdvs(db){
+function listRdvs(db) {
+  return async function (req, res) {
+    let rdvs = await db.Rdv.findAndCountAll({
+      where: {},
+      include: [{ model: db.Patient }],
+      order: [["daterdv", "DESC"]],
+    });
 
-   
-    return async function (req,res) {
-
-        let rdvs= await db.Rdv.findAndCountAll(
-            {
-                where:{},
-                include: [{ model: db.Patient }],
-                order: [["daterdv", "DESC"]],
-           }
-        );
-
-        return res.json(rdvs) 
-    }
+    return res.json(rdvs);
+  };
 }
 
-
 function deleteRdv(db) {
-    return async function (req, res) {
-      try {
-        let id = parseInt(req.params.id);
-        await db.Rdv.destroy({
-          where: { id:id },
-        });
-        return res.json({status : 200,payload :"rdv deleted"});
-      } catch (err) {
-        return res.status(500).json({ status: "failed", payload: err });
-      }
-    };
-  }
-module.exports={addRdv,listRdvs ,deleteRdv}
+  return async function (req, res) {
+    try {
+      let id = parseInt(req.params.id);
+      await db.Rdv.destroy({
+        where: { id: id },
+      });
+      return res.json({ status: 200, payload: "rdv deleted" });
+    } catch (err) {
+      return res.status(500).json({ status: "failed", payload: err });
+    }
+  };
+}
+module.exports = { addRdv, listRdvs, deleteRdv };

@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Snackbar from "../components/Notification";
+import Loader from "../components/Loading";
+import Pagination from "../components/Pagination";
+
 
 const SnackbarType = {
   success: "success",
@@ -20,6 +23,7 @@ export default function Allrdv() {
   useEffect(() => {
     async function getAllRdv() {
       try {
+        
         setLoading(true);
         let response = await axios.get("http://localhost:8000/rdvs", {
           headers: {
@@ -61,9 +65,20 @@ export default function Allrdv() {
       setLoading(false);
     }
   }
+//PAGINITION
+  //const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+ // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = rdvs.slice(indexOfFirstPost, indexOfLastPost);
 
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
   
-  return (
+  return ( loading ?
+    (<div> <Loader/> </div>) : (
     <div>
       <div className="grid grid-rows-5 grid-cols-5 ">
         <div className="col-span-5 row-span-5">
@@ -85,7 +100,7 @@ export default function Allrdv() {
             </div>
             <h1 className="text-xl py-1 px-5 text-blue-800 mb-2">RDVs</h1>
 
-            <div className="overflow-auto px-32	 rounded-lg shadow hidden md:block">
+            <div className="overflow-auto px-60 pb-10 rounded-lg shadow hidden md:block">
               <table className=" origin-center	">
                 <thead className="bg-gray-50 border-b-2 border-gray-300">
                   <tr>
@@ -95,10 +110,14 @@ export default function Allrdv() {
                     <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
                       Full Name
                     </th>
-                    <th className="p-3 w-9/12 text-sm font-semibold tracking-wide text-left">
+                    <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
+                      Date RDV
+                    </th>
+                    <th className="p-3 w-60 text-sm font-semibold tracking-wide text-left">
                       Motif
                     </th>
-                    <th className="p-3 w-60 text-sm font-semibold tracking-wide text-left"></th>
+                  
+                    <th className="p-3  text-sm font-semibold tracking-wide text-left"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-300">
@@ -115,7 +134,7 @@ export default function Allrdv() {
                     })
                     .map((rdv, index) => (
                       <tr>
-                        <Link to={"/rdv/" + rdv.id}>
+                        
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             <a
                               className="font-bold text-blue-500 hover:underline"
@@ -124,9 +143,12 @@ export default function Allrdv() {
                               {index}
                             </a>
                           </td>
-                        </Link>
+                       
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {`${rdv.Patient.firstName} ${rdv.Patient.lastName}`}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {new Date(rdv.daterdv).toDateString()}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {rdv.motif}
@@ -152,6 +174,13 @@ export default function Allrdv() {
                     ))}
                 </tbody>
               </table>
+              <span className="flex justify-center py-5 ">
+                <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={rdvs.length}
+                paginate={paginate}
+              />
+                </span>
               <div className="py-10">
                 <Link to={"/rdvs/addrdv"}>
                   <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -161,9 +190,9 @@ export default function Allrdv() {
               </div>
             </div>
           </div>
-          <div>{loading ? <p>Chargement...</p> : ""}</div>
         </div>
       </div>
     </div>
+    )
   );
 }

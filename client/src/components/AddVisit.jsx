@@ -1,14 +1,12 @@
 import axios from "axios";
 import React from "react";
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 import Snackbar from "./Notification";
-
 
 const SnackbarType = {
   success: "success",
   fail: "fail",
 };
-
 
 export default function AddVisit() {
   const [patientId, setPatientId] = useState("");
@@ -18,11 +16,9 @@ export default function AddVisit() {
   const [prix, setPrix] = useState("");
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
-  
 
   const snackbarRef = useRef(null);
- 
- 
+
   function onInputChange(e) {
     if (e.target.name === "patientId") setPatientId(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
@@ -33,38 +29,36 @@ export default function AddVisit() {
   }
 
   async function onSubmit(e) {
-    
-    e.preventDefault();
+    window.location.reload();
+    snackbarRef.current.show();
+    try {
+      e.preventDefault();
 
-    let response = await axios.post(
-      "http://localhost:8000/visit/addvisit",
-      {
-        patientId: patientId,
-        motif: motif,
-        interrogatoire : interrogatoire,
-        conclusion: conclusion,
-        prix: prix,
-      },
-      {
-        
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token")
-             }
-      }
-     
-      
-    );
-    if (response.status === "failed" )
-    {
-      setResult(SnackbarType.fail)
-      setMsg("something went wrong")
-      return result , msg
+      let response = await axios.post(
+        "http://localhost:8000/visits/addvisit",
+        {
+          patientId: patientId,
+          motif: motif,
+          interrogatoire: interrogatoire,
+          conclusion: conclusion,
+          prix: prix,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+      setResult(SnackbarType.success);
+      setMsg("patient added");
+      return result, msg;
+    } catch {
+      setResult(SnackbarType.fail);
+      setMsg("something went wrong");
+      return result, msg;
     }
-      setResult(SnackbarType.success)
-      setMsg("patient added")
-      return result , msg
   }
-  
+
   return (
     <div>
       <div>
@@ -76,15 +70,16 @@ export default function AddVisit() {
                   htmlFor="patientId"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  PatientID
+                  Patient C.I.N
                 </label>
                 <input
+                  required
                   type="number"
                   id="patientId"
                   value={patientId}
                   onChange={(e) => onInputChange(e)}
                   name="patientId"
-                  autoComplete="patientId-name"
+                  autoComplete="patienId-name"
                   className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -97,6 +92,7 @@ export default function AddVisit() {
                   Motif
                 </label>
                 <textarea
+                  required
                   type="text-area"
                   onChange={(e) => onInputChange(e)}
                   id="motif"
@@ -114,6 +110,7 @@ export default function AddVisit() {
                   Interrogatoire
                 </label>
                 <textarea
+                  required
                   type="text"
                   onChange={(e) => onInputChange(e)}
                   id="interrogatoire"
@@ -131,6 +128,7 @@ export default function AddVisit() {
                   Conclusion
                 </label>
                 <textarea
+                  required
                   type="text"
                   onChange={(e) => onInputChange(e)}
                   id="conclusion"
@@ -148,6 +146,7 @@ export default function AddVisit() {
                   Prix
                 </label>
                 <input
+                  required
                   type="number"
                   onChange={(e) => onInputChange(e)}
                   id="prix"
@@ -165,11 +164,7 @@ export default function AddVisit() {
                 >
                   Save
                 </button>
-                <Snackbar
-        ref={snackbarRef}
-        message={msg}
-        type={result}
-      />
+                <Snackbar ref={snackbarRef} message={msg} type={result} />
               </div>
             </div>
           </form>

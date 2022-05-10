@@ -1,8 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 import Snackbar from "./Notification";
-
 
 const SnackbarType = {
   success: "success",
@@ -14,11 +13,8 @@ export default function Addpayment() {
   const [montant, setmontant] = useState("");
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
-  
-
 
   const snackbarRef = useRef(null);
-  
 
   function onInputChange(e) {
     if (e.target.name === "patientId") setpatientId(e.target.value);
@@ -27,31 +23,31 @@ export default function Addpayment() {
   }
 
   async function onSubmit(e) {
-    e.preventDefault();
+    window.location.reload();
+    try {
+      e.preventDefault();
 
-    let response = await axios.post(
-      "http://localhost:8000/payment",
-      {
-        patientId: patientId,
-        visitId: visitId,
-        montant: montant
-        
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token"),
+      let response = await axios.post(
+        "http://localhost:8000/payment",
+        {
+          patientId: patientId,
+          visitId: visitId,
+          montant: montant,
         },
-      }
-    );
-    if (response.status === "failed" )
-    {
-      setResult(SnackbarType.fail)
-      setMsg("something went wrong")
-      return result , msg
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+      setResult(SnackbarType.success);
+      setMsg("Payment added");
+      return result, msg;
+    } catch {
+      setResult(SnackbarType.fail);
+      setMsg("something went wrong");
+      return result, msg;
     }
-      setResult(SnackbarType.success)
-      setMsg("patient added")
-      return result , msg
   }
 
   return (
@@ -88,6 +84,7 @@ export default function Addpayment() {
                   type="number"
                   onChange={(e) => onInputChange(e)}
                   id="visitId"
+                  required
                   name="visitId"
                   autoComplete="visitId-name"
                   className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -106,6 +103,7 @@ export default function Addpayment() {
                   onChange={(e) => onInputChange(e)}
                   id="montant"
                   name="montant"
+                  required
                   autoComplete="montant-name"
                   className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 ></input>
@@ -118,11 +116,7 @@ export default function Addpayment() {
                 >
                   Save
                 </button>
-                <Snackbar
-        ref={snackbarRef}
-        message={msg}
-        type={result}
-      />
+                <Snackbar ref={snackbarRef} message={msg} type={result} />
               </div>
             </div>
           </form>

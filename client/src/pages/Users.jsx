@@ -2,6 +2,8 @@ import React, { useEffect, useState,useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../components/Notification";
+import Loader from "../components/Loading";
+import Pagination from "../components/Pagination";
 
 const SnackbarType = {
   success: "success",
@@ -42,9 +44,11 @@ export default function Users() {
     getUser();
   }, []);
   async function handleDeleteClick(userId) {
+    window.location.reload();
     try {
+      
       let response = await axios.delete(
-        "http://localhost:8000/allrdvs/" + userId,
+        "http://localhost:8000/users/" + userId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
@@ -64,12 +68,24 @@ export default function Users() {
     }
   }
 
+  //PAGINITION
+  //const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+ // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = users.slice(indexOfFirstPost, indexOfLastPost);
+
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
 
 
   return (
+    loading ? 
+    (<div> <Loader /> </div>) : (
     <div className="">
       <div>
-        
       </div>
       <div className=" bg-gray-100">
       <div className="font-bold leading-snug text-right px-2 py-2 ">
@@ -108,7 +124,7 @@ export default function Users() {
                 <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
                   Password
                 </th>
-                <th className="p-3 w-60 text-sm font-semibold tracking-wide text-left"></th>
+                <th className="p-3 text-sm font-semibold tracking-wide text-left"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -156,6 +172,13 @@ export default function Users() {
                 ))}
             </tbody>
           </table>
+          <span className="flex justify-center py-5 ">
+                <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={users.length}
+                paginate={paginate}
+              />
+                </span>
         </div>
         <div className="py-10">
           <Link to={"/users/adduser"}>
@@ -168,8 +191,7 @@ export default function Users() {
           </Link>
         </div>
       </div>
-
-      <div>{loading ? <p>Chargement...</p> : ""}</div>
     </div>
+    )
   );
 }

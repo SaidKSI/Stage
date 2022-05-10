@@ -5,7 +5,9 @@ const {  } = require("./params/patients");
 const { usersList } = require("./params/users");
 const { generateAccessToken } = require("./middleware/utils");
 const { authenticateToken, authenticateRole } = require("./middleware/auth");
-
+  //nodemails
+const nodemailer = require('nodemailer')
+const bodyParser = require('body-parser')
 //database
 const db = require("./models");
 
@@ -76,7 +78,39 @@ app.delete("/rdvs/:id" , authenticateToken ,deleteRdv(db));
 
 
 
+ app.post('/contactpatient', async (req, res) => {
+    const {email} = req.body;
+    const {subject}  = req.body;
 
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: 'lyla.skiles71@ethereal.email', // ethereal user
+            pass: 'JGaN7DdAEmcY7Mrc67', // ethereal password
+        },
+    });
+    
+    const msg = {
+        from: 'lyla.skiles71@ethereal.email', // sender address
+        to: `${email}`, // list of receivers
+        subject: `${subject}`, // Subject line
+        text: "Long time no see", // plain text body
+    }
+    // send mail with defined transport object
+    const info = await transporter.sendMail(msg);
+  
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    
+    res.send('Email Sent!')
+  })
  
 
 

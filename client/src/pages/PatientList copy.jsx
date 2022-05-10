@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
-import Pagination from "../components/Pagination";
 
 const SnackbarType = {
   success: "success",
@@ -17,9 +16,6 @@ export default function PatientList() {
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
 
-
-
- 
   const snackbarRef = useRef(null);
 
   useEffect(() => {
@@ -62,21 +58,12 @@ export default function PatientList() {
       setResult(SnackbarType.fail);
       setMsg("something went wrong");
       return result, msg;
+     
     }
   }
-    //PAGINITION
-  //const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
- // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = patients.slice(indexOfFirstPost, indexOfLastPost);
+  useEffect(()=>{
 
- // Change page
- const paginate = pageNumber => setCurrentPage(pageNumber);
- 
-  useEffect(() => {}, []);
+  },[])
   return loading ? (
     <div>
       {" "}
@@ -161,7 +148,7 @@ export default function PatientList() {
                     </td>
 
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {new Date(patient.dateN).toDateString()}
+                    {new Date(patient.dateN).toDateString()}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {patient.email}
@@ -195,20 +182,9 @@ export default function PatientList() {
                     </td>
                   </tr>
                 ))}
-                
-              
             </tbody>
-           
           </table>
-           
         </div>
-        <span className="flex justify-center py-5 ">
-                <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={patients.length}
-                paginate={paginate}
-              />
-                </span>
         <div className="py-10">
           <Link to={"/patients/addpatient"}>
             <button

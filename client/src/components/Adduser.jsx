@@ -1,9 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 import Snackbar from "./Notification";
-
-
 
 const SnackbarType = {
   success: "success",
@@ -13,13 +11,11 @@ const SnackbarType = {
 export default function Adduser() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
-  const [role, setRole] = useState();
+  const [role, setRole] = useState("Docteur");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
-  
-
 
   const snackbarRef = useRef(null);
 
@@ -30,31 +26,33 @@ export default function Adduser() {
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "password") setPassword(e.target.value);
   }
-  async function Adduser() {
-    let response = await axios.post(
-      "http://localhost:8000/patients/addpatient",
-      {
-        firstName: firstName,
-        lastName: lastName,
-        role: role,
-        password: password,
-        email: email,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token"),
+  async function Adduser(e) {
+   
+    try {
+      e.preventDefault();
+      let response = await axios.post(
+        "http://localhost:8000/users/adduser",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          role: role,
+          password: password,
+          email: email,
         },
-      }
-    );
-    if (response.status === "failed" )
-    {
-      setResult(SnackbarType.fail)
-      setMsg("something went wrong")
-      return result , msg
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+      setResult(SnackbarType.success);
+      setMsg("patient added");
+      return result, msg;
+    } catch {
+      setResult(SnackbarType.fail);
+      setMsg("something went wrong");
+      return result, msg;
     }
-      setResult(SnackbarType.success)
-      setMsg("patient added")
-      return result , msg
   }
   return (
     <div>
@@ -83,6 +81,7 @@ export default function Adduser() {
                         First name
                       </label>
                       <input
+                        required
                         type="text"
                         id="firstName"
                         onChange={(e) => onInputChange(e)}
@@ -101,6 +100,7 @@ export default function Adduser() {
                         Last name
                       </label>
                       <input
+                        required
                         type="text"
                         onChange={(e) => onInputChange(e)}
                         value={lastName}
@@ -119,6 +119,7 @@ export default function Adduser() {
                         Email
                       </label>
                       <input
+                        required
                         type="email"
                         onChange={(e) => onInputChange(e)}
                         value={email}
@@ -138,7 +139,7 @@ export default function Adduser() {
                       <select
                         className="form-select appearance-none
                         block
-                        w-full
+                        
                         px-3
                         py-1.5
                         text-base
@@ -150,21 +151,16 @@ export default function Adduser() {
                         transition
                         ease-in-out
                         m-0
-                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example "
+                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        aria-label="Default select example "
                         name="role"
                         value={role}
                         onChange={(e) => onInputChange(e)}
                       >
-                        <option
-                          value="Docteur"
-                          className=""
-                        >
+                        <option value="Docteur" className="">
                           Docteur
                         </option>
-                        <option
-                          value="Assistance"
-                          className=" "
-                        >
+                        <option value="Assistance" className=" ">
                           Assistance
                         </option>
                       </select>
@@ -177,9 +173,10 @@ export default function Adduser() {
                         Password
                       </label>
                       <input
+                        required
                         type="password"
                         onChange={(e) => onInputChange(e)}
-                        value={lastName}
+                        value={password}
                         id="password"
                         name="password"
                         className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -192,15 +189,11 @@ export default function Adduser() {
                     <button
                       type="submit"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={Adduser}
+                      onClick={(e)=>Adduser(e)}
                     >
                       Save
                     </button>
-                    <Snackbar
-        ref={snackbarRef}
-        message={msg}
-        type={result}
-      />
+                    <Snackbar ref={snackbarRef} message={msg} type={result} />
                   </div>
                 </div>
               </div>
