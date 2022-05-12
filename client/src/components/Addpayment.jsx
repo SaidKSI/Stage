@@ -28,7 +28,7 @@ export default function Addpayment() {
       e.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/payment",
+        "/api/payment",
         {
           patientId: patientId,
           visitId: visitId,

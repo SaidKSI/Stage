@@ -26,7 +26,7 @@ export default function Visit() {
     async function getVisits() {
       try {
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/visits", {
+        let response = await axios.get("/api/visits", {
           headers: {
             Authorization:
               "Bearer " + localStorage.getItem("user_token", "role"),
@@ -49,7 +49,7 @@ export default function Visit() {
     window.location.reload();
     try {
       let response = await axios.delete(
-        "http://localhost:8000/visits/" + visitId,
+        "/api/visits/" + visitId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

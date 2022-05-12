@@ -16,7 +16,7 @@ export default function RDVlist() {
     try {
       setLoading(true);
       let response = await axios.get(
-        "http://localhost:8000/rdvs/" + patientId,
+        "/api/rdvs/" + patientId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

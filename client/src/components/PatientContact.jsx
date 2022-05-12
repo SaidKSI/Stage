@@ -29,7 +29,7 @@ export default function PatientContact() {
     try {
 
       let response = await axios.get(
-        "http://localhost:8000/patients/" + patientId,
+        "/api/patients/" + patientId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
@@ -58,7 +58,7 @@ export default function PatientContact() {
       e.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/payment",
+        "/api/payment",
         {
           email: email,
           subject: subject

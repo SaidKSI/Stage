@@ -31,7 +31,7 @@ export default function Adduser() {
     try {
       e.preventDefault();
       let response = await axios.post(
-        "http://localhost:8000/users/adduser",
+        "/api/users/adduser",
         {
           firstName: firstName,
           lastName: lastName,

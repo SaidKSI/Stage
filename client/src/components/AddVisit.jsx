@@ -35,7 +35,7 @@ export default function AddVisit() {
       e.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/visits/addvisit",
+        "/api/visits/addvisit",
         {
           patientId: patientId,
           motif: motif,

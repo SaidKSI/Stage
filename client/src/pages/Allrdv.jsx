@@ -25,7 +25,7 @@ export default function Allrdv() {
       try {
         
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/rdvs", {
+        let response = await axios.get("/api/rdvs", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
@@ -46,7 +46,7 @@ export default function Allrdv() {
   async function handleDeleteClick(rdvId) {
     try {
       let response = await axios.delete(
-        "http://localhost:8000/rdvs/" + rdvId,
+        "/api/rdvs/" + rdvId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

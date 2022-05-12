@@ -24,7 +24,7 @@ export default function Users() {
     async function getUser() {
       try {
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/users", {
+        let response = await axios.get("/api/users", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
@@ -48,7 +48,7 @@ export default function Users() {
     try {
       
       let response = await axios.delete(
-        "http://localhost:8000/users/" + userId,
+        "/api/users/" + userId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

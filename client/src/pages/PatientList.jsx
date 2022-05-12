@@ -26,7 +26,7 @@ export default function PatientList() {
     async function getPatient() {
       try {
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/patients", {
+        let response = await axios.get("/api/patients", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
@@ -48,7 +48,7 @@ export default function PatientList() {
     window.location.reload();
     try {
       let response = await axios.delete(
-        "http://localhost:8000/patients/" + patientId,
+        "/api/patients/" + patientId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

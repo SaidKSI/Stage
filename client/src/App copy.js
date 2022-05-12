@@ -9,7 +9,7 @@ function App() {
   const [nameError, setNameError] = useState(false);
  
    
-  const url = "http://localhost:8000/salam";
+  const url = "/api/salam";
 
   function onNameChange(event) {
     setName(event.target.value);

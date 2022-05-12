@@ -1,13 +1,14 @@
 const express=require("express");
 const cors=require("cors"); 
-
+const path = require("path");
 const {  } = require("./params/patients");
 const { usersList } = require("./params/users");
 const { generateAccessToken } = require("./middleware/utils");
 const { authenticateToken, authenticateRole } = require("./middleware/auth");
   //nodemails
 const nodemailer = require('nodemailer')
-const bodyParser = require('body-parser')
+ 
+
 //database
 const db = require("./models");
 
@@ -18,58 +19,55 @@ const { addVisit , listVisit,deleteVisit,detailsVisit } = require("./controllers
 const { listPayment , addPayment,deletePayment } = require("./controllers/payments.controller");
 
 
-
+ 
 
 //config express
 const app=express();
 app.use(express.json()) 
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
+app.use(express.static("public"));
+app.use(cors({origin: "http://localhost:3000"}))
 
-//access nested objects
-app.use(express.urlencoded(true)) 
- app.use(cors({origin: "http://localhost:3000"}))
-
- 
 
 
 // Endpoint, Route, web service, 
 
 // VISITS
-app.post("/visits/addvisit", authenticateToken,addVisit(db))
-app.get("/visits", authenticateToken,listVisit(db))
-app.delete("/visits/:id" , authenticateToken ,deleteVisit(db));
-app.get("/visits/:id" , authenticateToken ,detailsVisit(db));
+app.post("/api/visits/addvisit", authenticateToken,addVisit(db))
+app.get("/api/visits", authenticateToken,listVisit(db))
+app.delete("/api/visits/:id" , authenticateToken ,deleteVisit(db));
+app.get("/api/visits/:id" , authenticateToken ,detailsVisit(db));
 // PAYMENTS
 
-app.get("/payments", authenticateToken,listPayment(db))
-app.post("/payments/addpayment/:id", authenticateToken,addPayment(db))
-app.delete("/payments/:id" , authenticateToken ,deletePayment(db));
+app.get("/api/payments", authenticateToken,listPayment(db))
+app.post("/api/payments/addpayment/:id", authenticateToken,addPayment(db))
+app.delete("/api/payments/:id" , authenticateToken ,deletePayment(db));
 
 
 
 // PATIENTS
 
 
-app.get("/patients", authenticateToken,listPatients(db))
-app.post("/patients/addpatient", authenticateToken,addPatient(db))
-app.delete("/patients/:id", authenticateToken,deletePatient(db))
-app.get("/patients/:id", authenticateToken,detailsPatient(db))
-app.put("/patients/:id", authenticateToken,updatePatient(db))
+app.get("/api/patients", authenticateToken,listPatients(db))
+app.post("/api/patients/addpatient", authenticateToken,addPatient(db))
+app.delete("/api/patients/:id", authenticateToken,deletePatient(db))
+app.get("/api/patients/:id", authenticateToken,detailsPatient(db))
+app.put("/api/patients/:id", authenticateToken,updatePatient(db))
 
 
 // USERS
 
 //app.get("/" , getUser(db))
-app.post("/login", login(db))
-app.post("/users/adduser", authenticateToken ,addUser(db))
-app.get("/users", authenticateToken ,getUser(db))
-app.delete("/users/:id" , authenticateToken ,deleteUser(db));
+app.post("/api/login", login(db))
+app.post("/api/users/adduser", authenticateToken ,addUser(db))
+app.get("/api/users", authenticateToken ,getUser(db))
+app.delete("/api/users/:id" , authenticateToken ,deleteUser(db));
 
 // RDVS
 
-app.get("/rdvs",authenticateToken,listRdvs(db))
-app.post("/rdvs/addrdv", authenticateToken,addRdv(db))
-app.delete("/rdvs/:id" , authenticateToken ,deleteRdv(db));
+app.get("/api/rdvs",authenticateToken,listRdvs(db))
+app.post("/api/rdvs/addrdv", authenticateToken,addRdv(db))
+app.delete("/api/rdvs/:id" , authenticateToken ,deleteRdv(db));
 
 
 // app.get("/rdvs/:id", authenticateToken,listRdv(db))
@@ -78,15 +76,13 @@ app.delete("/rdvs/:id" , authenticateToken ,deleteRdv(db));
 
 
 
- app.post('/contactpatient', async (req, res) => {
+ app.post('/api/contactpatient', async (req, res) => {
     const {email} = req.body;
     const {subject}  = req.body;
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
+        
         auth: {
             user: 'lyla.skiles71@ethereal.email', // ethereal user
             pass: 'JGaN7DdAEmcY7Mrc67', // ethereal password
@@ -112,7 +108,11 @@ app.delete("/rdvs/:id" , authenticateToken ,deleteRdv(db));
     res.send('Email Sent!')
   })
  
-
+  app.get("*",function (req,res) { 
+ 
+      res.sendFile(path.join(__dirname, "public", "index.html"));
+ 
+   })
 
 app.listen(8000,function(){
 console.log("the server is listening to port 8000")

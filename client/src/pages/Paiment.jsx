@@ -24,7 +24,7 @@ export default function Paiment() {
     async function getPayments() {
       try {
         setLoading(true);
-        let response = await axios.get("http://localhost:8000/payments", {
+        let response = await axios.get("/api/payments", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
@@ -47,7 +47,7 @@ export default function Paiment() {
     window.location.reload();
     try {
       let response = await axios.delete(
-        "http://localhost:8000/payments/" + paymentId,
+        "/api/payments/" + paymentId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

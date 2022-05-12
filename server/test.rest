@@ -1,7 +1,7 @@
 
 ###
 
-POST http://localhost:8000/login
+POST /api/login
 Content-Type: application/json
 
 {
@@ -9,15 +9,15 @@ Content-Type: application/json
     "password": "1234"
 }
 ###
-GET    http://localhost:8000/users 
+GET    /api/users 
 
 ###
-GET    http://localhost:8000/patient/1
+GET    /api/patient/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ###
 
-POST    http://localhost:8000/patients/addpatient
+POST    /api/patients/addpatient
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -27,15 +27,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
     "cin" : 285
 }
 ###
-GET    http://localhost:8000/patients
+GET    /api/patients
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ###
-GET    http://localhost:8000/rdvs
+GET    /api/rdvs
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ###
-POST    http://localhost:8000/patient
+POST    /api/patient
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -46,7 +46,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 
 ###
 ###
-POST    http://localhost:8000/rdvs/addrdv
+POST    /api/rdvs/addrdv
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MTI2NjU0OX0.sQhmhRPg8JBRSKF4ZXrYbau0Wb2CFGqdkzH-2IpNcZY
 
@@ -57,7 +57,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 }
 
 ###
-POST    http://localhost:8000/visits/addvisit
+POST    /api/visits/addvisit
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -74,28 +74,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 
 
 ######
-GEt    http://localhost:8000/visits
+GEt    /api/visits
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ######
-GEt    http://localhost:8000/rdvs
+GEt    /api/rdvs
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ######
-GEt    http://localhost:8000/rdvs/1
+GEt    /api/rdvs/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ######
-GEt    http://localhost:8000/payment
+GEt    /api/payment
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 
 ######
-POST    http://localhost:8000/payments/addpayment/1
+POST    /api/payments/addpayment/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -105,28 +105,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
     "montant": 50.0
 }
 ########
-GET    http://localhost:8000/payments
+GET    /api/payments
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 ######
-DELETE     http://localhost:8000/deletepatients/1
+DELETE     /api/deletepatients/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 
 ######
-GET      http://localhost:8000/patients/2
+GET      /api/patients/2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 ######
-GEt    http://localhost:8000/visits/1
+GEt    /api/visits/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
 
 ###
 
-POST    http://localhost:8000/users/adduser
+POST    /api/users/adduser
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -139,14 +139,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 }
 
 ######
-DELETE   http://localhost:8000/patients
+DELETE   /api/patients
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 {
     "id":5
 }
 ###
-DELETE    http://localhost:8000/patients
+DELETE    /api/patients
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -158,12 +158,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 }
 
 ####
-GET    http://localhost:8000/users
+GET    /api/users
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 ###
 
-PUT   http://localhost:8000/patients/7
+PUT   /api/patients/7
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 
@@ -176,7 +176,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 }
 #####
    
-POST    http://localhost:8000/contactpatient
+POST    /api/contactpatient
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
 

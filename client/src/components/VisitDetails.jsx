@@ -15,7 +15,7 @@ export default function VisitDetails() {
     try {
       setLoading(true);
       let response = await axios.get(
-        "http://localhost:8000/visits/" + visitId,
+        "/visits/" + visitId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),

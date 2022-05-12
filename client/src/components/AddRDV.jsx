@@ -27,7 +27,7 @@ export default function AddRDV() {
       e.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/rdvs/addrdv",
+        "/api/rdvs/addrdv",
         {
           patientId: patientId,
           motif: motif,

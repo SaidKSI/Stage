@@ -37,7 +37,7 @@ export default function AddPatient() {
     e.preventDefault();
 
     let response = await axios.post(
-      "http://localhost:8000/patients/addpatient",
+      "/api/patients/addpatient",
       {
         firstName: firstName,
         lastName: lastName,
