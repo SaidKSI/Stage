@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Rdv.init({ 
     motif: DataTypes.STRING,
+    timerdv: DataTypes.STRING,
+    specialization: DataTypes.STRING,
     daterdv: DataTypes.DATE
+
   }, {
     sequelize,
     modelName: 'Rdv',

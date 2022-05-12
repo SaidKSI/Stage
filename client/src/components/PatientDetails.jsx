@@ -7,6 +7,7 @@ export default function PatientDetails() {
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   let { id } = useParams();
   useEffect(() => {
     try {

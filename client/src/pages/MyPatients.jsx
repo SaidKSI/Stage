@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
@@ -9,61 +9,45 @@ const SnackbarType = {
   success: "success",
   fail: "fail",
 };
-export default function PatientList() {
-  const [patients, setPatients] = useState([]);
+export default function MyPatients() {
+  const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [count, setCount] = useState();
   const [result, setResult] = useState();
-  const [msg, setMsg] = useState("");
+  const [count, setCount] = useState();
 
 
 
- 
-  const snackbarRef = useRef(null);
-
+  let { id } = useParams();
   useEffect(() => {
-    async function getPatient() {
-      try {
-        setLoading(true);
-        let response = await axios.get("http://localhost:8000/patients", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("user_token"),
-          },
-        });
-
-        let { rows } = response.data;
-        setPatients(rows);
-        let { count } = response.data;
-        setCount(count);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-      }
-    }
-
-    getPatient();
-  }, []);
-  async function handleDeleteClick(patientId) {
-    window.location.reload();
     try {
-      let response = await axios.delete(
-        "http://localhost:8000/patients/" + patientId,
+      let pid = parseInt(id);
+      getPatient(pid);
+    } catch (err) {
+      alert("not found");
+    }
+  }, []);
+  // get one Patient
+  async function getPatient(patientId) {
+    try {
+      setLoading(true);
+      let response = await axios.get(
+        "http://localhost:8000/mypatients/" + patientId,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
           },
         }
       );
-      setResult(SnackbarType.success);
-      setMsg("patient added");
-      return result, msg;
+
+      let { payload } = response.data;
+      setPatient(payload);
+      setLoading(false);
     } catch (err) {
-      setResult(SnackbarType.fail);
-      setMsg("something went wrong");
-      return result, msg;
+      setLoading(false);
     }
   }
+
     //PAGINITION
   //const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +55,7 @@ export default function PatientList() {
  // Get current posts
  const indexOfLastPost = currentPage * postsPerPage;
  const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = patients.slice(indexOfFirstPost, indexOfLastPost);
+ const currentPosts = patient.slice(indexOfFirstPost, indexOfLastPost);
 
  // Change page
  const paginate = pageNumber => setCurrentPage(pageNumber);
@@ -127,7 +111,7 @@ export default function PatientList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {patients
+              {patient
                 .filter((patient, index) => {
                   if (search == "") {
                     return patient;
@@ -170,7 +154,7 @@ export default function PatientList() {
                       <div className="">
                         {" "}
                         <button
-                          onClick={() => handleDeleteClick(patient.id)}
+                          //onClick={() => handleDeleteClick(patient.id)}
                           type="submit"
                           className="inline-flex justify-center py-2 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >

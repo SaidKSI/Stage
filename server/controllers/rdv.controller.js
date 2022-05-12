@@ -20,6 +20,7 @@ function addRdv(db) {
       let newRdv = {
         motif: req.body.motif,
         daterdv:req.body.daterdv,
+        timerdv:req.body.timerdv,
         patientId: patientId,
       };
 

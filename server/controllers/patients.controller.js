@@ -1,14 +1,16 @@
 const db = require("../models");
-const nodemailer = require('nodemailer')
-const bodyParser = require('body-parser')
-
+const nodemailer = require("nodemailer");
+const bodyParser = require("body-parser");
 
 function listPatients(db) {
   return async function (req, res) {
     let patients = await db.Patient.findAndCountAll({
       where: {},
-      include: [{ model: db.Rdv }],
-      order: [["id", "DESC"]],
+      include: [
+        { model: db.Rdv }
+        , 
+        { model: db.User }
+      ]
     });
 
     return res.json(patients);
@@ -51,8 +53,6 @@ function addPatient(db) {
           .json({ status: "failed", error: errors.join(", ") });
       parseInt();
 
-      
-
       let newPatient = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -60,6 +60,7 @@ function addPatient(db) {
         dateN: req.body.dateN,
         email: req.body.email,
         gender: req.body.gender,
+        docteurId: req.body.docteurId,
       };
 
       await db.Patient.create(newPatient);
@@ -76,25 +77,25 @@ function updatePatient(db) {
     try {
       let id = parseInt(req.params.id);
       dateN = new Date(req.body.dataN);
-     
-        await db.Patient.update(
-          {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            cin: req.body.cin,
-            dateN: dateN,
-            email: req.body.email,
-            gender: req.body.gender
-          },
-          {
-            where: { id: id }
-          }
-        );
-     
-        return res.status(201).json("patient has been updated");
+
+      await db.Patient.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          cin: req.body.cin,
+          dateN: dateN,
+          email: req.body.email,
+          gender: req.body.gender,
+        },
+        {
+          where: { id: id },
+        }
+      );
+
+      return res.status(201).json("patient has been updated");
     } catch (err) {
       console.log(err);
-      return res.status(204).json({ status: "failed"});
+      return res.status(204).json({ status: "failed" });
     }
   };
 }
@@ -146,21 +147,21 @@ function countPatient() {
 
 function contactPatient(db) {
   return async function (req, res) {
-    let { text } = req.body
-	const transport = nodemailer.createTransport({
-		host: process.env.MAIL_HOST,
-		port: process.env.MAIL_PORT,
-		auth: {
-			user: process.env.MAIL_USER,
-			pass: process.env.MAIL_PASS
-		}
-	})
+    let { text } = req.body;
+    const transport = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
 
-	await transport.sendMail({
-		from: process.env.MAIL_FROM,
-		to: "test@test.com",
-		subject: "test email",
-		html: `<div className="email" style="
+    await transport.sendMail({
+      from: process.env.MAIL_FROM,
+      to: "test@test.com",
+      subject: "test email",
+      html: `<div className="email" style="
         border: 1px solid black;
         padding: 20px;
         font-family: sans-serif;
@@ -172,14 +173,10 @@ function contactPatient(db) {
     
         <p>All the best, Darwin</p>
          </div>
-    `
-	})
+    `,
+    });
   };
 }
-
-
-
-
 
 module.exports = {
   detailsPatient,

@@ -33,7 +33,8 @@ export default function AddPatient() {
   
   async function onSubmit(e) {
     window.location.reload();
-    try {snackbarRef.current.show();
+    snackbarRef.current.show();
+    try {
     e.preventDefault();
 
     let response = await axios.post(
@@ -53,7 +54,7 @@ export default function AddPatient() {
       }
     );
     
-    setResult(SnackbarType.success);
+      setResult(SnackbarType.success);
       setMsg("patient added");
       return result, msg;
     }
@@ -66,7 +67,7 @@ export default function AddPatient() {
   return (
     <div>
       <div className="mt-10 sm:mt-0">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
+        <div className="grid grid-cols-4 gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -77,7 +78,7 @@ export default function AddPatient() {
               </p>
             </div>
           </div>
-          <div className="mt-5 md:mt-0 md:col-span-2">
+          <div className="mt-5  col-span-3">
             <form action="#" method="POST">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5  sm:p-6">

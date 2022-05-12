@@ -15,9 +15,20 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
+      petientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "patients",
+          key: "id",
+        }
+      },
       role: {
         type: Sequelize.STRING,
         isIn: [['Medicine', 'Assistance','Admin']],
+      },
+      specialization: {
+        type: Sequelize.STRING,
+        
       },
       email: {
         type: Sequelize.STRING

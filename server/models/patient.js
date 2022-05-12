@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Patient.hasMany(models.Rdv),
         Patient.hasMany(models.Visit),
-        Patient.hasMany(models.Payment);
+        Patient.hasMany(models.Payment),
+        Patient.belongsTo(models.User, { foreignKey: "docteurId" });
     }
   }
   Patient.init(
@@ -15,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       cin: DataTypes.INTEGER,
       dateN: DataTypes.DATE,
       email: DataTypes.STRING,
-      
+
       gender: DataTypes.STRING,
     },
     {

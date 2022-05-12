@@ -24,6 +24,7 @@ function login(db) {
       return res.json({
         status: "success",
         token: token,
+        specialization : user.specialization,
         userid: user.id,
         role: user.role,
         firstName: user.firstName,
@@ -67,6 +68,7 @@ function addUser(db) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         role: req.body.role,
+        specialization : req.body.specialization,
         password: req.body.password,
         email: req.body.email,
       };

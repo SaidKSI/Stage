@@ -8,10 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      docteurId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
       cin: {
         type: Sequelize.STRING,
-        unique: true ,
-        allowNull: false
+        unique: true,
+        allowNull: false,
       },
       firstName: {
         type: Sequelize.STRING,
@@ -21,7 +28,7 @@ module.exports = {
       },
       gender: {
         type: Sequelize.STRING,
-        isIn: [['Homme', 'Femme']],
+        isIn: [["Homme", "Femme"]],
       },
       dateN: {
         type: Sequelize.DATE,
@@ -29,7 +36,6 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      
 
       createdAt: {
         allowNull: false,

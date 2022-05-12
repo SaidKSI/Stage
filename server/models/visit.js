@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   
     static associate(models) {
       Visit.belongsTo(models.Patient, {foreignKey: 'patientId'}),
+      Visit.belongsTo(models.User, {foreignKey: 'docteurId'}),
       Visit.hasMany(models.Payment)
 
     }
@@ -14,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   Visit.init({ 
     motif: DataTypes.STRING,
     interrogatoire: DataTypes.STRING,
+    datevisit: DataTypes.DATE,
     conclusion: DataTypes.STRING,
     prix: DataTypes.FLOAT
    

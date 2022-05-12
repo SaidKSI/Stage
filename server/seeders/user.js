@@ -26,6 +26,7 @@ module.exports = {
           firstName: "medicine",
         lastName: "medicine",
           role: "Medicine",
+          specialization: " Dermatology",
           email: "doc@doc.com", 
           password: "1234",
                 createdAt: new Date(),

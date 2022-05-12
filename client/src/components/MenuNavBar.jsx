@@ -64,18 +64,30 @@ export default function MenuNavBar({ fixed }) {
                       </a>
                     </Link>
                   </li>
-                 { role !== "Assistance" ?<li className="nav-item">
+                 { role !== "Assistance" ?<><li className="nav-item">
                     <Link to={"/visits"}>
                       <a
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href="/Visit"
-                        ref={visit}
-                       
+
+
                       >
                         Visit
                       </a>
                     </Link>
-                  </li>: null }
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/mypatients"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                        href="/mypatients"
+                        
+
+                      >
+                        My Patients
+                      </a>
+                    </Link>
+                  </li></>: null }
                   <li className="nav-item">
                     <Link to={"/rdvs"}>
                       <a

@@ -31,6 +31,7 @@ import Adduser from "./components/Adduser"
 import Users from "./pages/Users"
 import UpdatePatients from "./components/UpdatePatient";
 import PatientContact from "./components/PatientContact";
+import MyPatients from "./pages/MyPatients";
 
 
 
@@ -72,6 +73,7 @@ function App() {
 
 
      
+      <Route path="/mypatients" element={<Privateroute><Layout><MyPatients/></Layout></Privateroute>} /> 
 
 
 

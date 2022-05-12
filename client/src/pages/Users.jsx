@@ -140,7 +140,7 @@ export default function Users() {
                   }
                 })
                 .map((user, index) => (
-                  <tr>
+                  <tr className={ index%2 == 0 ? "bg-white" : "text-gray-700" }>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {index}
                     </td>

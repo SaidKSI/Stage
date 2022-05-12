@@ -17,6 +17,8 @@ module.exports = {
         {
           firstName: "admin",
           lastName: "admin", 
+          email: "admin@admin.com", 
+          gender: "Homme", 
           cin: 1,
           createdAt: new Date(),
           updatedAt: new Date()

@@ -11,20 +11,26 @@ module.exports = {
       motif: {
         type: Sequelize.STRING,
       },
+      specialization: {
+        type: Sequelize.STRING,
+      },
       daterdv: {
         type: Sequelize.DATE,
+      },
+      timerdv: {
+        type: Sequelize.STRING,
       },
       patientId: {
         type: Sequelize.INTEGER,
         references: {
           model: "patients",
-          key: "id"
+          key: "id",
         },
-        onDelete : "CASCADE",
+        onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        allowNull: false
-      }, 
-  
+        allowNull: false,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

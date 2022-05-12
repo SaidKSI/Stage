@@ -44,6 +44,7 @@ export default function Allrdv() {
     getAllRdv();
   }, []);
   async function handleDeleteClick(rdvId) {
+    window.location.reload();
     try {
       let response = await axios.delete(
         "http://localhost:8000/rdvs/" + rdvId,
@@ -111,6 +112,9 @@ export default function Allrdv() {
                       Full Name
                     </th>
                     <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
+                      Time RDV
+                    </th>
+                    <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
                       Date RDV
                     </th>
                     <th className="p-3 w-60 text-sm font-semibold tracking-wide text-left">
@@ -146,6 +150,9 @@ export default function Allrdv() {
                        
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {`${rdv.Patient.firstName} ${rdv.Patient.lastName}`}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          {rdv.timerdv}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         {new Date(rdv.daterdv).toDateString()}
