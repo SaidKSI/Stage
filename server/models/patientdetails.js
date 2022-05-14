@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       weight: DataTypes.STRING,
       height: DataTypes.STRING,
-      gender: DataTypes.INTEGER,
       datemesure: DataTypes.DATE,
       
     },

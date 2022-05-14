@@ -11,12 +11,11 @@ export default function AddPatient() {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [cin, setcin] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [dateN, setDateN] = useState("");
   const [email, setEmail] = useState("");
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
-
 
   const snackbarRef = useRef(null);
 
@@ -27,38 +26,35 @@ export default function AddPatient() {
     else if (e.target.name === "gender") setGender(e.target.value);
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "dateN") setDateN(e.target.value);
-   
-
   }
-  
+
   async function onSubmit(e) {
     window.location.reload();
     snackbarRef.current.show();
     try {
-    e.preventDefault();
+      e.preventDefault();
 
-    let response = await axios.post(
-      "http://localhost:8000/patients/addpatient",
-      {
-        firstName: firstName,
-        lastName: lastName,
-        cin: cin,
-        gender: gender,
-        email: email,
-        dateN: dateN
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token"),
+      let response = await axios.post(
+        "http://localhost:8000/patients/addpatient",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          cin: cin,
+          gender: gender,
+          email: email,
+          dateN: dateN,
         },
-      }
-    );
-    
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        }
+      );
+
       setResult(SnackbarType.success);
       setMsg("patient added");
       return result, msg;
-    }
-    catch {
+    } catch {
       setResult(SnackbarType.fail);
       setMsg("something went wrong");
       return result, msg;
@@ -91,7 +87,7 @@ export default function AddPatient() {
                         First name
                       </label>
                       <input
-                      required
+                        required
                         type="text"
                         id="firstName"
                         onChange={(e) => onInputChange(e)}
@@ -110,8 +106,7 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
-                      required
-
+                        required
                         onChange={(e) => onInputChange(e)}
                         value={lastName}
                         id="lastName"
@@ -128,8 +123,7 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
-                      required
-
+                        required
                         onChange={(e) => onInputChange(e)}
                         value={cin}
                         id="cin"
@@ -148,8 +142,7 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="date"
-                      required
-
+                        required
                         onChange={(e) => onInputChange(e)}
                         value={dateN}
                         id="dateN"
@@ -168,8 +161,7 @@ export default function AddPatient() {
                       </label>
                       <input
                         type="text"
-                      required
-
+                        required
                         onChange={(e) => onInputChange(e)}
                         value={email}
                         id="email"

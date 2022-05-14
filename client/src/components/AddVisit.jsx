@@ -10,6 +10,7 @@ const SnackbarType = {
 
 export default function AddVisit() {
   const [patientId, setPatientId] = useState("");
+  const [docteurId, setDocteurId] = useState("");
   const [motif, setMotif] = useState("");
   const [interrogatoire, setinterrogatoire] = useState("");
   const [conclusion, setConclusion] = useState("");
@@ -21,6 +22,7 @@ export default function AddVisit() {
 
   function onInputChange(e) {
     if (e.target.name === "patientId") setPatientId(e.target.value);
+    else if (e.target.name === "docteurId") setDocteurId(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
     else if (e.target.name === "interrogatoire")
       setinterrogatoire(e.target.value);
@@ -29,7 +31,7 @@ export default function AddVisit() {
   }
 
   async function onSubmit(e) {
-    window.location.reload();
+    
     snackbarRef.current.show();
     try {
       e.preventDefault();
@@ -38,6 +40,7 @@ export default function AddVisit() {
         "http://localhost:8000/visits/addvisit",
         {
           patientId: patientId,
+          userId: docteurId,
           motif: motif,
           interrogatoire: interrogatoire,
           conclusion: conclusion,
@@ -60,25 +63,23 @@ export default function AddVisit() {
   }
 
   return (
-    <div>
-      
-      <div>
-        
-        
-        <div className="mt-10 sm:mt-0">
+    <div className="mt-10 sm:mt-0">
+      <div className="grid grid-cols-4 gap-6">
+        {" "}
         <div className="md:col-span-1">
-            <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Patient Informations
-              </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                Add your new patient to the database
-              </p>
-            </div>
+          <div className="px-4 sm:px-0">
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Patient Informations
+            </h3>
+            <p className="mt-1 text-sm text-gray-600">
+              Add your new patient to the database
+            </p>
           </div>
+        </div>
+        <div className="mt-5  col-span-3">
           <form action="#" method="POST" className="pb-3">
             <div className="shadow overflow-hidden sm:rounded-md ">
-              <div className="  sm:p-3">
+              <div className="flex justify-evenly"><div className="  sm:p-3">
                 <label
                   htmlFor="patientId"
                   className="block text-sm font-medium text-gray-700"
@@ -93,9 +94,30 @@ export default function AddVisit() {
                   onChange={(e) => onInputChange(e)}
                   name="patientId"
                   autoComplete="patienId-name"
-                  className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
+              <div className="  sm:p-3">
+                <label
+                  htmlFor="docteurId"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Docteur 
+                </label>
+                <input
+                  required
+                  type="number"
+                  id="docteurId"
+                  value={docteurId}
+                  onChange={(e) => onInputChange(e)}
+                  name="docteurId"
+                  autoComplete="docteurId-name"
+                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              </div>
+              
+              
               <br></br>
               <div className=" sm:p-3">
                 <label
@@ -111,7 +133,7 @@ export default function AddVisit() {
                   id="motif"
                   name="motif"
                   value={motif}
-                  className="mt-1 block w-[50%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-[55%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
               <br></br>
@@ -129,7 +151,7 @@ export default function AddVisit() {
                   id="interrogatoire"
                   value={interrogatoire}
                   name="interrogatoire"
-                  className="mt-1 block w-[50%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-[55%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
               <br></br>
@@ -147,7 +169,7 @@ export default function AddVisit() {
                   id="conclusion"
                   value={conclusion}
                   name="conclusion"
-                  className="mt-1 block w-[50%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-[55%] border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
               <br></br>

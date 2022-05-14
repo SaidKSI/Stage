@@ -14,10 +14,12 @@ function addVisit(db) {
           .json({ status: "failed", error: errors.join(", ") });
 
       let patientId = parseInt(req.body.patientId);
+      let userId = parseInt(req.body.userId);
       let prix = parseFloat(req.body.prix);
 
       let newVisit = {
         motif: req.body.motif,
+        userId: userId,
         interrogatoire: req.body.interrogatoire,
         conclusion: req.body.conclusion,
         prix: prix,
@@ -37,8 +39,13 @@ function listVisit(db) {
   return async function (req, res) {
     let Visits = await db.Visit.findAndCountAll({
       where: {},
-      include: [{ model: db.Patient }],
-      order: [["id", "DESC"]],
+      include: [
+        { model: db.Patient },
+        {
+          model: db.User,
+        }
+      ],
+      
     });
     return res.json(Visits);
   };
@@ -84,15 +91,14 @@ function detailsVisit(db) {
   };
 }
 
-
 function deleteVisit(db) {
   return async function (req, res) {
     try {
       let id = parseInt(req.params.id);
       await db.Visit.destroy({
-        where: { id:id },
+        where: { id: id },
       });
-      return res.json({status : 200,payload :"Visit deleted"});
+      return res.json({ status: 200, payload: "Visit deleted" });
     } catch (err) {
       return res.status(500).json({ status: "failed", payload: err });
     }

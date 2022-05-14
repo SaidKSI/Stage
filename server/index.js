@@ -16,6 +16,7 @@ const { addRdv,listRdvs,deleteRdv } = require("./controllers/rdv.controller");
 const { login , getUser,addUser ,deleteUser} = require("./controllers/users.conroller");
 const { addVisit , listVisit,deleteVisit,detailsVisit } = require("./controllers/visits.controller");
 const { listPayment , addPayment,deletePayment } = require("./controllers/payments.controller");
+const {  addPatientDetails ,patientDetails } = require("./controllers/patientDetails.controller");
 
 
 
@@ -55,6 +56,8 @@ app.post("/patients/addpatient", authenticateToken,addPatient(db))
 app.delete("/patients/:id", authenticateToken,deletePatient(db))
 app.get("/patients/:id", authenticateToken,detailsPatient(db))
 app.put("/patients/:id", authenticateToken,updatePatient(db))
+app.post("/patients/addpatientdetails", authenticateToken,addPatientDetails(db))
+app.get("/patients/patientdetails/:id", authenticateToken,patientDetails(db))
 
 
 // USERS

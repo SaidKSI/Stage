@@ -128,7 +128,7 @@ export default function PatientList() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {patients
-                .filter((patient, index) => {
+                .filter((patient) => {
                   if (search == "") {
                     return patient;
                   } else if (
@@ -166,7 +166,7 @@ export default function PatientList() {
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {patient.email}
                     </td>
-                    <td className="flex flex-rows gap-2  p-3 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="flex justify-start gap-2 text-sm text-gray-700 whitespace-nowrap">
                       <div className="">
                         {" "}
                         <button

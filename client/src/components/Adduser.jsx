@@ -14,8 +14,7 @@ export default function Adduser() {
   const [role, setRole] = useState("Docteur");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [specialization, setSpecialization] = useState();
-
+  const [specialization, setSpecialization] = useState("General");
 
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
@@ -26,12 +25,12 @@ export default function Adduser() {
     if (e.target.name === "firstName") setFirstName(e.target.value);
     else if (e.target.name === "lastName") setLastName(e.target.value);
     else if (e.target.name === "role") setRole(e.target.value);
-    else if (e.target.name === "specialization") setSpecialization(e.target.value);
+    else if (e.target.name === "specialization")
+      setSpecialization(e.target.value);
     else if (e.target.name === "email") setEmail(e.target.value);
     else if (e.target.name === "password") setPassword(e.target.value);
   }
   async function Adduser(e) {
-   
     try {
       e.preventDefault();
       let response = await axios.post(
@@ -40,7 +39,7 @@ export default function Adduser() {
           firstName: firstName,
           lastName: lastName,
           role: role,
-          specialization : specialization,
+          specialization: specialization,
           password: password,
           email: email,
         },
@@ -134,15 +133,16 @@ export default function Adduser() {
                         className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
-                    <div className="flex gap-2 justify-between"><div className="col-span-6  sm:col-span-3 lg:col-span-2">
-                      <label
-                        htmlFor="role"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Role
-                      </label>
-                      <select
-                        className="form-select appearance-none
+                    <div className="flex gap-2 justify-between">
+                      <div className="col-span-6  sm:col-span-3 lg:col-span-2">
+                        <label
+                          htmlFor="role"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Role
+                        </label>
+                        <select
+                          className="form-select appearance-none
                         block
                         
                         px-3
@@ -157,80 +157,89 @@ export default function Adduser() {
                         ease-in-out
                         m-0
                         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        aria-label="Default select example "
-                        name="role"
-                        value={role}
-                        onChange={(e) => onInputChange(e)}
-                      >
-                        <option value="Docteur" className="">
-                          Docteur
-                        </option>
-                        <option value="Assistance" className=" ">
-                          Assistance
-                        </option>
-                      </select>
+                          aria-label="Default select example "
+                          name="role"
+                          value={role}
+                          onChange={(e) => onInputChange(e)}
+                        >
+                          <option value="Docteur" className="">
+                            Docteur
+                          </option>
+                          <option value="Assistance" className=" ">
+                            Assistance
+                          </option>
+                        </select>
+                      </div>
+                      {role == "Docteur" ? (
+                        <div className="">
+                          <label
+                            htmlFor="role"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Role
+                          </label>
+                          <select
+                            className="form-select appearance-none
+                        block
+                        
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            aria-label="Default select example "
+                            name="specialization"
+                            value={specialization}
+                            onChange={(e) => onInputChange(e)}
+                          >
+                            <option value="General" className="">
+                              General
+                            </option>
+                            <option value="Allergy and immunology" className="">
+                              Allergy and immunology
+                            </option>
+                            <option value="Dermatology" className="">
+                              Dermatology
+                            </option>
+                            <option value="Family medicine" className=" ">
+                              Family medicine
+                            </option>
+                            <option value="Medical genetics" className=" ">
+                              Medical genetics
+                            </option>
+                            <option value="Neurology" className=" ">
+                              Neurology
+                            </option>
+                            <option value="Ophthalmology" className=" ">
+                              Ophthalmology
+                            </option>
+                            <option value="Pediatrics" className=" ">
+                              Pediatrics
+                            </option>
+                            <option
+                              value="Physical medicine and rehabilitation"
+                              className=" "
+                            >
+                              Physical medicine and rehabilitation
+                            </option>
+                            <option value="Psychiatry" className=" ">
+                              Psychiatry
+                            </option>
+                            <option value="Surgery" className=" ">
+                              Surgery
+                            </option>
+                          </select>
+                        </div>
+                      ) : null}
                     </div>
-                    {role=="Docteur" ? <div className="" >
-                    <label
-                        htmlFor="role"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Role
-                      </label>
-                      <select
-                        className="form-select appearance-none
-                        block
-                        
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        aria-label="Default select example "
-                        name="specialization"
-                        value={specialization}
-                        onChange={(e) => onInputChange(e)}
-                      >
-                        <option value="Allergy and immunology" className="">
-                        Allergy and immunology
-                        </option>
-                        <option value="Dermatology" className="">
-                        Dermatology
-                        </option>
-                        <option value="Family medicine" className=" ">
-                        Family medicine
-                        </option>
-                        <option value="Medical genetics" className=" ">
-                        Medical genetics
-                        </option>
-                        <option value="Neurology" className=" ">
-                        Neurology
-                        </option>
-                        <option value="Ophthalmology" className=" ">
-                        Ophthalmology
-                        </option>
-                        <option value="Pediatrics" className=" ">
-                        Pediatrics
-                        </option>
-                        <option value="Physical medicine and rehabilitation" className=" ">
-                        Physical medicine and rehabilitation
-                        </option>
-                        <option value="Psychiatry" className=" ">
-                        Psychiatry
-                        </option>
-                        <option value="Surgery" className=" ">
-                        Surgery
-                        </option>
-                      </select>
-                    </div>:null}</div>
-                    
+
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="password"
@@ -255,7 +264,7 @@ export default function Adduser() {
                     <button
                       type="submit"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={(e)=>Adduser(e)}
+                      onClick={(e) => Adduser(e)}
                     >
                       Save
                     </button>

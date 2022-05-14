@@ -12,25 +12,21 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "patients",
-          key: "id"
+          key: "id",
         },
-        onDelete : "CASCADE",
+        onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        allowNull: false
+        allowNull: false,
       },
       weight: {
-        type: Sequelize.STRING,
-        unique: true ,
-        allowNull: false
+        type: Sequelize.FLOAT,
       },
       height: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       datemesure: {
         type: Sequelize.DATE,
       },
-      
-      
 
       createdAt: {
         allowNull: false,

@@ -8,8 +8,7 @@ function listPatients(db) {
       where: {},
       include: [
         { model: db.Rdv }
-        , 
-        { model: db.User }
+        
       ]
     });
 
@@ -60,7 +59,7 @@ function addPatient(db) {
         dateN: req.body.dateN,
         email: req.body.email,
         gender: req.body.gender,
-        docteurId: req.body.docteurId,
+       
       };
 
       await db.Patient.create(newPatient);

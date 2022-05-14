@@ -13,9 +13,6 @@ module.exports = {
       interrogatoire: {
         type: Sequelize.STRING
       },
-      datevisit: {
-        type: Sequelize.DATE,
-      },
       conclusion: {
         type: Sequelize.STRING
       }, 
@@ -29,7 +26,7 @@ module.exports = {
         onUpdate: "CASCADE",
         allowNull: false
       },
-      docteurId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: "users",

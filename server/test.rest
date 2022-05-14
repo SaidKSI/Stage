@@ -70,6 +70,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 {
    
     "motif": "Fever",
+    "userId" : 2 ,
     "interrogatoire": "dolo",
     "conclusion": "Dwa",
     "prix": 250.00,
@@ -190,3 +191,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
     "email": "mu.ou540@gmail.com",
     "subject": "ara flos"
 }
+
+
+
+###
+
+POST    http://localhost:8000/patients/addpatientdetails
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+
+
+    {
+    "patientId": 1,
+    "weight": 56.55,
+    "height" : 175.5,
+    "datemesure":"2022/04/22"
+    
+}
+###
+
+GET    http://localhost:8000/patients/patientdetails/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk

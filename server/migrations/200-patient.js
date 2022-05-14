@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      docteurId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-      },
+      // docteurId: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: "users",
+      //     key: "id",
+      //   },
+      // },
       cin: {
         type: Sequelize.STRING,
         unique: true,

@@ -93,7 +93,7 @@ export default function PatientDetails() {
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="flex justify-start gap-2 text-sm font-medium text-gray-500">
                   <div className="">
                         <Link to={"/patients/patientcontact/" + patient.id}>
                           <button
@@ -101,6 +101,16 @@ export default function PatientDetails() {
                             className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                           >
                             Contact Patients
+                          </button>
+                        </Link>
+                        </div>
+                        <div className="">
+                        <Link to={"/patients/patientdetails/" + patient.id}>
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          >
+                           Patient Details
                           </button>
                         </Link>
                         </div>

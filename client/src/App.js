@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import H1 from "./components/H1";
-import Todos from "./components/Todos";
+
 
 import {
   BrowserRouter,
@@ -10,9 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import TodosPage from "./pages/TodosPage";
 import Login from "./pages/Login";
-import Menu from "./components/Menu";
 import Layout from "./components/Layout";
 import PatientList from "./pages/PatientList";
 import Privateroute from "./components/privateroute";
@@ -21,7 +18,6 @@ import PatientDetails from "./components/PatientDetails";
 import Visit from "./pages/Visit";
 import AddVisit from "./components/AddVisit";
 import AddRDV from "./components/AddRDV";
-import RDVlist from "./components/RDVlist";
 import Allrdv from "./pages/Allrdv"
 import Home from "./pages/Home";
 import Paiment from "./pages/Paiment";
@@ -31,7 +27,8 @@ import Adduser from "./components/Adduser"
 import Users from "./pages/Users"
 import UpdatePatients from "./components/UpdatePatient";
 import PatientContact from "./components/PatientContact";
-import MyPatients from "./pages/MyPatients";
+import BarChart from "./components/Graph";
+
 
 
 
@@ -51,6 +48,7 @@ function App() {
       <Route path="/patients/:id" element={<Privateroute><Layout><PatientDetails /></Layout></Privateroute>} /> 
       <Route path="/patients/updatepatient/:id" element={<Privateroute><Layout><UpdatePatients /></Layout></Privateroute>} /> 
       <Route path="/patients/patientcontact/:id" element={<Privateroute><Layout><PatientContact /></Layout></Privateroute>} /> 
+      <Route path="/patients/patientdetails/:id" element={<Privateroute><Layout><BarChart /></Layout></Privateroute>} /> 
       
       
                         {/* Visits */}
@@ -73,7 +71,6 @@ function App() {
 
 
      
-      <Route path="/mypatients" element={<Privateroute><Layout><MyPatients/></Layout></Privateroute>} /> 
 
 
 

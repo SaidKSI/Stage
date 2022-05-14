@@ -23,12 +23,12 @@ export default function Addpayment() {
   }
 
   async function onSubmit(e) {
-    window.location.reload();
+    //window.location.reload();
     try {
       e.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/payment",
+        "http://localhost:8000/payments/addpayment",
         {
           patientId: patientId,
           visitId: visitId,
@@ -51,9 +51,19 @@ export default function Addpayment() {
   }
 
   return (
-    <div>
-      <div>
-        <div className="mt-10 sm:mt-0">
+    <div className="mt-10 sm:mt-0">
+      <div className="grid grid-cols-4 gap-6">
+        <div className="md:col-span-1">
+          <div className="px-4 sm:px-0">
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Patient Informations
+            </h3>
+            <p className="mt-1 text-sm text-gray-600">
+              Add your new patient to the database
+            </p>
+          </div>
+        </div>
+        <div className="mt-5  col-span-3">
           <form action="#" method="POST">
             <div className="shadow overflow-hidden sm:rounded-md ">
               <div className="  sm:p-3">
