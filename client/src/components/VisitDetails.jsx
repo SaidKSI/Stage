@@ -104,7 +104,7 @@ export default function VisitDetails() {
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 
                   <div className="px-4 py-3  text-right sm:px-6">
-                  <Link to={"/payments/addpayment/"+visit.Patient.id}>
+                  <Link to={"/payments/addpayment/"+visit.id}>
                   
                   <button
                     type="submit"

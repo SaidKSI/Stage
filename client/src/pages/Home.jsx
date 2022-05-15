@@ -4,7 +4,7 @@ import PatientList from "./PatientList";
 import Allrdv from "./Allrdv";
 import Visit from "./Visit";
 import Paiment from "./Paiment";
-import BarChart from "../components/Graph";
+
 
 export default function Home() {
   
@@ -12,16 +12,16 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col container mx-auto py-5 ">
       <div className="flex justify-between py-4">
-        <div className="text-blue-800">{localStorage.getItem("userName")}</div>
-        <div className="text-blue-800">{localStorage.getItem("role")}</div>
-        <div className="Date">
+        <div className="px-3 py-2 text-blue-700 flex items-center text-xl  font-bold leading-snug  hover:opacity-75">{localStorage.getItem("userName")}</div>
+        <div className="px-3 py-2 text-blue-700 flex items-center text-xl  font-bold leading-snug  hover:opacity-75">{localStorage.getItem("role")}</div>
+        <div className="px-3 py-2 text-blue-700 flex items-center text-xl  font-bold leading-snug  hover:opacity-75">
           <CurrentTime></CurrentTime>
         </div>
       </div>
-      {/* <BarChart /> */}
-      {/* <div className="py-4">
+      
+      <div className="py-4">
       
         <PatientList></PatientList>
       </div>
@@ -36,7 +36,7 @@ export default function Home() {
       <div className="py-4">
         
         <Paiment></Paiment>
-      </div> */}
+      </div>
     </div>
   );
 }

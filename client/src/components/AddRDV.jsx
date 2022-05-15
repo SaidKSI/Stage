@@ -12,7 +12,7 @@ export default function AddRDV() {
   const [patientId, setpatientId] = useState("");
   const [motif, setmotif] = useState("");
   const [daterdv, setdaterdv] = useState("");
-  const [specialization, setSpecialization] = useState();
+  const [specialization, setSpecialization] = useState("General");
 
   const [timerdv, setRdvTime] = useState();
 
@@ -139,6 +139,9 @@ export default function AddRDV() {
                   value={specialization}
                   onChange={(e) => onInputChange(e)}
                 >
+                  <option value="General" className="">
+                    General
+                  </option>
                   <option value="Allergy and immunology" className="">
                     Allergy and immunology
                   </option>
@@ -225,7 +228,7 @@ export default function AddRDV() {
                   </ul>
                 </div>
               </div>
-              <div className="px-4 py-[0.100vh] border-none text-right sm:px-6">
+              <div className="px-4 pb-4 py-[0.100vh] border-none text-right sm:px-6">
                 <button
                   type="submit"
                   className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

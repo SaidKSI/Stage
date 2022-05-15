@@ -22,16 +22,15 @@ export default function Addpayment() {
     else if (e.target.name === "montant") setmontant(e.target.value);
   }
 
-  async function onSubmit(e) {
+  async function onSubmit(visitId) {
     //window.location.reload();
     try {
-      e.preventDefault();
+      visitId.preventDefault();
 
       let response = await axios.post(
-        "http://localhost:8000/payments/addpayment",
+        "http://localhost:8000/payments/addpayment"+visitId,
         {
           patientId: patientId,
-          visitId: visitId,
           montant: montant,
         },
         {

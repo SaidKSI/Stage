@@ -171,9 +171,9 @@ export default function Adduser() {
                         </select>
                       </div>
                       {role == "Docteur" ? (
-                        <div className="">
+                        <div className="specialization">
                           <label
-                            htmlFor="role"
+                            htmlFor="r"
                             className="block text-sm font-medium text-gray-700"
                           >
                             Role

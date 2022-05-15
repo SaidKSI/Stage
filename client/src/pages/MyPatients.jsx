@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
@@ -15,8 +15,6 @@ export default function MyPatients() {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState();
   const [count, setCount] = useState();
-
-
 
   let { id } = useParams();
   useEffect(() => {
@@ -48,18 +46,18 @@ export default function MyPatients() {
     }
   }
 
-    //PAGINITION
+  //PAGINITION
   //const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
- // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = patient.slice(indexOfFirstPost, indexOfLastPost);
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = patient.slice(indexOfFirstPost, indexOfLastPost);
 
- // Change page
- const paginate = pageNumber => setCurrentPage(pageNumber);
- 
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   useEffect(() => {}, []);
   return loading ? (
     <div>
@@ -84,7 +82,17 @@ export default function MyPatients() {
             placeholder="Search...."
           />
         </div>
-        <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">Patients</h1>
+        <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">
+          {" "}
+          <Link to={"/patients"}>
+            <a
+              href=""
+              className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+            >
+              Patients
+            </a>
+          </Link>{" "}
+        </h1>
         <div className="overflow-auto px-60 pb-10 rounded-lg shadow hidden md:block">
           <table className=" origin-center	">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
@@ -123,7 +131,7 @@ export default function MyPatients() {
                   }
                 })
                 .map((patient, index) => (
-                  <tr className={index/2 ==0 ?"bg-white": "text-gray-700" }>
+                  <tr className={index / 2 == 0 ? "bg-white" : "text-gray-700"}>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {index}
                     </td>
@@ -179,20 +187,16 @@ export default function MyPatients() {
                     </td>
                   </tr>
                 ))}
-                
-              
             </tbody>
-           
           </table>
-           
         </div>
         <span className="flex justify-center py-5 ">
-                <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={patients.length}
-                paginate={paginate}
-              />
-                </span>
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={patients.length}
+            paginate={paginate}
+          />
+        </span>
         <div className="py-10">
           <Link to={"/patients/addpatient"}>
             <button

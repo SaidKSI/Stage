@@ -6,6 +6,7 @@ import Loader from "../components/Loading";
 import Pagination from "../components/Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
 const SnackbarType = {
   success: "success",
   fail: "fail",
@@ -93,7 +94,7 @@ export default function Visit() {
               <span className="text-blue-800">{count} </span> Visits
             </div>
             <div className="flex justify-start">
-              <div>
+              <div className="px-5 ">
                 <label
                   htmlFor="specialization"
                   className="block text-sm font-medium text-gray-700"
@@ -160,7 +161,7 @@ export default function Visit() {
                   </option>
                 </select>{" "}
               </div>{" "}
-              <div className=" px-[-10px] pt-[26px]">
+              <div className=" px-[-100px] pt-[26px]">
                 {" "}
                 <button
                   className="w-fit h-fit"
@@ -186,7 +187,17 @@ export default function Visit() {
                 placeholder="Search...."
               />
             </div>
-            <h1 className="text-xl text-blue-600 py-1 px-5 mb-2">Visits</h1>
+            <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">
+          {" "}
+          <Link to={"/visits"}>
+            <a
+              href=""
+              className="px-3 py-2 flex items-center text-xl  font-bold leading-snug  hover:opacity-75"
+            >
+              Visits
+            </a>
+          </Link>{" "}
+        </h1>
 
             <div className="overflow-auto px-10 pb-10 rounded-lg shadow hidden md:block">
               <table className=" origin-center	">
@@ -200,6 +211,9 @@ export default function Visit() {
                     </th>
                     <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
                       Docteur Name
+                    </th>
+                    <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
+                      Date Visit
                     </th>
                     <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
                       Specialization
@@ -247,7 +261,7 @@ export default function Visit() {
                       }
                     })
                     .map((visit, index) => (
-                      <tr>
+                      <tr className={ index%2 == 0 ? "bg-white" : "text-gray-700" }>
                         <Link to={"/visits/" + visit.id}>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             <a
@@ -263,6 +277,9 @@ export default function Visit() {
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {`${visit.User.firstName} ${visit.User.lastName}`}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          {new Date(visit.datevisit).toDateString()}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {visit.User.specialization}
@@ -311,7 +328,7 @@ export default function Visit() {
               <div className="py-10">
                 <Link to={"/visits/addvisit"}>
                   <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Add Visit
+                  <FontAwesomeIcon icon={faCalendarPlus} size="2x" />
                   </button>
                 </Link>
               </div>

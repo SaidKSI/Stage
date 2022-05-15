@@ -4,6 +4,8 @@ import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
 import Pagination from "../components/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 const SnackbarType = {
@@ -106,7 +108,17 @@ export default function Paiment() {
                 placeholder="Search...."
               />
             </div>
-            <h1 className="text-xl py-1 px-5 text-blue-800 mb-2">Paiment</h1>
+            <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">
+          {" "}
+          <Link to={"/payments"}>
+            <a
+              href=""
+              className="px-3 py-2 flex items-center text-xl  font-bold leading-snug  hover:opacity-75"
+            >
+              Payments
+            </a>
+          </Link>{" "}
+        </h1>
 
             <div className="overflow-auto px-32	 rounded-lg shadow hidden md:block">
               <table className=" origin-center	">
@@ -148,7 +160,7 @@ export default function Paiment() {
                       }
                     })
                     .map((payment, index) => (
-                      <tr>
+                      <tr className={ index%2 == 0 ? "bg-white" : "text-gray-700" }>
                       
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             <a
@@ -172,7 +184,7 @@ export default function Paiment() {
                           {payment.montant}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                          {payment.Visit.prix - payment.montant}
+                          {payment.rest}
                         </td>
                         <td className="flex flex-rows gap-2  p-3 text-sm text-gray-700 whitespace-nowrap">
                           <div className="">
@@ -202,13 +214,13 @@ export default function Paiment() {
                 paginate={paginate}
               />
                 </span>
-              <div className="py-10">
+              {/* <div className="py-10">
                 <Link to={"/payments/addpayment"}>
                   <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Add Payment
+                  <FontAwesomeIcon icon={faPlusCircle}  size="2x" />
                   </button>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

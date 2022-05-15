@@ -41,7 +41,7 @@ function App() {
       
       
                             {/* Home */}
-      <Route path="/" element={<Privateroute><Layout><Home /></Layout></Privateroute> } /> 
+      <Route path="/" element={<Privateroute><Home /></Privateroute> } /> 
                       {/* Patients */}
       <Route path="/patients" element={<Privateroute><Layout><PatientList /></Layout></Privateroute>} /> 
       <Route path="/patients/addpatient" element={<Privateroute><Layout><AddPatient /></Layout></Privateroute>} /> 
@@ -65,7 +65,7 @@ function App() {
                   {/* Payments */}
       <Route path="/payments" element={<Privateroute><Layout><Paiment /></Layout></Privateroute>} /> 
       <Route path="/payments/:id" element={<Privateroute><Layout><PatientDetails /></Layout></Privateroute>} /> 
-      <Route path="/payments/addpayment" element={<Privateroute><Layout><Addpayment/></Layout></Privateroute>} /> 
+      {/* <Route path="/payments/addpayment" element={<Privateroute><Layout><Addpayment/></Layout></Privateroute>} />  */}
       <Route path="/payments/addpayment/:id" element={<Privateroute><Layout><Addpayment/></Layout></Privateroute>} /> 
       
 

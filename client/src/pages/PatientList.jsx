@@ -4,6 +4,8 @@ import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
 import Pagination from "../components/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const SnackbarType = {
   success: "success",
@@ -17,9 +19,6 @@ export default function PatientList() {
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
 
-
-
- 
   const snackbarRef = useRef(null);
 
   useEffect(() => {
@@ -64,18 +63,18 @@ export default function PatientList() {
       return result, msg;
     }
   }
-    //PAGINITION
+  //PAGINITION
   //const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
- // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = patients.slice(indexOfFirstPost, indexOfLastPost);
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = patients.slice(indexOfFirstPost, indexOfLastPost);
 
- // Change page
- const paginate = pageNumber => setCurrentPage(pageNumber);
- 
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   useEffect(() => {}, []);
   return loading ? (
     <div>
@@ -100,8 +99,18 @@ export default function PatientList() {
             placeholder="Search...."
           />
         </div>
-        <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">Patients</h1>
-        <div className="overflow-auto px-60 pb-10 rounded-lg shadow hidden md:block">
+        <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">
+          {" "}
+          <Link to={"/patients"}>
+            <a
+              href=""
+              className="px-3 py-2 flex items-center text-xl  font-bold leading-snug  hover:opacity-75"
+            >
+              Patients
+            </a>
+          </Link>{" "}
+        </h1>
+        <div className="overflow-auto px-60 pb-10 rounded-lg  hidden md:block">
           <table className=" origin-center	">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
@@ -139,7 +148,7 @@ export default function PatientList() {
                   }
                 })
                 .map((patient, index) => (
-                  <tr className={index/2 ==0 ?"bg-white": "text-gray-700" }>
+                  <tr className={index / 2 == 0 ? "bg-white" : "text-gray-700"}>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {index}
                     </td>
@@ -195,27 +204,23 @@ export default function PatientList() {
                     </td>
                   </tr>
                 ))}
-                
-              
             </tbody>
-           
           </table>
-           
         </div>
         <span className="flex justify-center py-5 ">
-                <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={patients.length}
-                paginate={paginate}
-              />
-                </span>
-        <div className="py-10">
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={patients.length}
+            paginate={paginate}
+          />
+        </span>
+        <div className="py-10 px-10">
           <Link to={"/patients/addpatient"}>
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="inline-flex justify-center py-2 px-5  border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Add Patients
+              <FontAwesomeIcon icon={faUserPlus} size="2x" />
             </button>
           </Link>
         </div>

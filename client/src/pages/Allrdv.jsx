@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
 import Pagination from "../components/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const SnackbarType = {
@@ -99,7 +101,17 @@ export default function Allrdv() {
                 placeholder="Search...."
               />
             </div>
-            <h1 className="text-xl py-1 px-5 text-blue-800 mb-2">RDVs</h1>
+            <h1 className="text-xl py-2 px-5 text-blue-800 mb-2">
+          {" "}
+          <Link to={"/rdvs"}>
+            <a
+              href=""
+              className="px-3 py-2 flex items-center text-xl  font-bold leading-snug  hover:opacity-75"
+            >
+              RDVs
+            </a>
+          </Link>{" "}
+        </h1>
 
             <div className="overflow-auto px-60 pb-10 rounded-lg shadow hidden md:block">
               <table className=" origin-center	">
@@ -110,6 +122,9 @@ export default function Allrdv() {
                     </th>
                     <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
                       Full Name
+                    </th>
+                    <th className="w-40 p-3 text-sm font-semibold tracking-wide text-left">
+                    Specialization
                     </th>
                     <th className="p-3 w-40 text-sm font-semibold tracking-wide text-left">
                       Time RDV
@@ -137,7 +152,7 @@ export default function Allrdv() {
                       }
                     })
                     .map((rdv, index) => (
-                      <tr>
+                      <tr className={ index%2 == 0 ? "bg-white" : "text-gray-700" }>
                         
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             <a
@@ -150,6 +165,9 @@ export default function Allrdv() {
                        
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {`${rdv.Patient.firstName} ${rdv.Patient.lastName}`}
+                        </td>
+                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          {rdv.specialization}
                         </td>
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {rdv.timerdv}
@@ -188,10 +206,10 @@ export default function Allrdv() {
                 paginate={paginate}
               />
                 </span>
-              <div className="py-10">
+              <div className="">
                 <Link to={"/rdvs/addrdv"}>
                   <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Add RDV
+                  <FontAwesomeIcon icon={faCalendarPlus} size="2x" />
                   </button>
                 </Link>
               </div>

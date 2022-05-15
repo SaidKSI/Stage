@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Loader from "./Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileContract } from "@fortawesome/free-solid-svg-icons";
 
 export default function PatientDetails() {
   const [patient, setPatient] = useState(null);
@@ -94,17 +96,17 @@ export default function PatientDetails() {
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="flex justify-start gap-2 text-sm font-medium text-gray-500">
-                  <div className="">
+                  <div className="px-10">
                         <Link to={"/patients/patientcontact/" + patient.id}>
                           <button
                             type="submit"
                             className="inline-flex justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                           >
-                            Contact Patients
+                           <FontAwesomeIcon icon={faFileContract} size="2x" />
                           </button>
                         </Link>
                         </div>
-                        <div className="">
+                        {/* <div className="">
                         <Link to={"/patients/patientdetails/" + patient.id}>
                           <button
                             type="submit"
@@ -113,7 +115,7 @@ export default function PatientDetails() {
                            Patient Details
                           </button>
                         </Link>
-                        </div>
+                        </div> */}
                   </dt>
                 </div>
 

@@ -21,6 +21,7 @@ function addRdv(db) {
         motif: req.body.motif,
         daterdv:req.body.daterdv,
         timerdv:req.body.timerdv,
+        specialization:req.body.specialization,
         patientId: patientId,
       };
 

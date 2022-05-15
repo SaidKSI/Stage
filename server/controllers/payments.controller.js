@@ -91,18 +91,19 @@ function addPayment(db) {
           .json({ status: "failed", error: errors.join(", ") });
 
       let visitId = parseInt(req.params.id);
-      let patientId = parseInt(req.body.patientId);
       let montant = parseFloat(req.body.montant);
 
       let lastPayments = await db.Payment.findAll({
-        include: [],
+        include: [ {
+                model: db.Visit,
+           }
+          ],
         order: [["createdAt", "DESC"]],
         Limit: 1,
       });
       let newPayment = {
         visitId: visitId,
-        patientId: patientId,
-        montant: montant,
+        montant: montant
       };
       if (lastPayments) {
         let rest = lastPayments.rest - montant;

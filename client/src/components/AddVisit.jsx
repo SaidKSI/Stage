@@ -12,6 +12,7 @@ export default function AddVisit() {
   const [patientId, setPatientId] = useState("");
   const [docteurId, setDocteurId] = useState("");
   const [motif, setMotif] = useState("");
+  const [datevisit, setDateVisit] = useState("");
   const [interrogatoire, setinterrogatoire] = useState("");
   const [conclusion, setConclusion] = useState("");
   const [prix, setPrix] = useState("");
@@ -23,6 +24,7 @@ export default function AddVisit() {
   function onInputChange(e) {
     if (e.target.name === "patientId") setPatientId(e.target.value);
     else if (e.target.name === "docteurId") setDocteurId(e.target.value);
+    else if (e.target.name === "datevisit") setDateVisit(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
     else if (e.target.name === "interrogatoire")
       setinterrogatoire(e.target.value);
@@ -79,7 +81,7 @@ export default function AddVisit() {
         <div className="mt-5  col-span-3">
           <form action="#" method="POST" className="pb-3">
             <div className="shadow overflow-hidden sm:rounded-md ">
-              <div className="flex justify-evenly"><div className="  sm:p-3">
+              <div className="flex justify-evenly"><div className="  px-10">
                 <label
                   htmlFor="patientId"
                   className="block text-sm font-medium text-gray-700"
@@ -97,7 +99,7 @@ export default function AddVisit() {
                   className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
-              <div className="  sm:p-3">
+              <div className="  px-10">
                 <label
                   htmlFor="docteurId"
                   className="block text-sm font-medium text-gray-700"
@@ -115,11 +117,29 @@ export default function AddVisit() {
                   className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
+              <div className="  px-10">
+                <label
+                  htmlFor="datevisit"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Date Visit
+                </label>
+                <input
+                  required
+                  type="date"
+                  id="datevisit"
+                  value={datevisit}
+                  onChange={(e) => onInputChange(e)}
+                  name="datevisit"
+                  autoComplete="datevisit-name"
+                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
               </div>
               
               
               <br></br>
-              <div className=" sm:p-3">
+              <div className="px-10">
                 <label
                   htmlFor="motif"
                   className="block text-sm font-medium text-gray-700"
@@ -137,7 +157,7 @@ export default function AddVisit() {
                 />
               </div>
               <br></br>
-              <div className=" sm:p-3">
+              <div className=" px-10">
                 <label
                   htmlFor="interrogatoire"
                   className="block text-sm font-medium text-gray-700"
@@ -155,7 +175,7 @@ export default function AddVisit() {
                 />
               </div>
               <br></br>
-              <div className="sm:p-3">
+              <div className="px-10">
                 <label
                   htmlFor="conclusion"
                   className="block text-sm font-medium text-gray-700"
@@ -173,7 +193,7 @@ export default function AddVisit() {
                 />
               </div>
               <br></br>
-              <div className=" sm:p-3">
+              <div className=" px-10">
                 <label
                   htmlFor="prix"
                   className="block text-sm font-medium text-gray-700"

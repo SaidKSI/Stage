@@ -19,6 +19,7 @@ function addVisit(db) {
 
       let newVisit = {
         motif: req.body.motif,
+        datevisit: req.body.datevisit,
         userId: userId,
         interrogatoire: req.body.interrogatoire,
         conclusion: req.body.conclusion,

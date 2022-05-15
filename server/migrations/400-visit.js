@@ -5,39 +5,42 @@ module.exports = {
       id: {
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       motif: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       interrogatoire: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       conclusion: {
-        type: Sequelize.STRING
-      }, 
+        type: Sequelize.STRING,
+      },
       patientId: {
         type: Sequelize.INTEGER,
         references: {
           model: "patients",
-          key: "id"
+          key: "id",
         },
-        onDelete : "CASCADE",
+        onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        allowNull: false
+        allowNull: false,
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: "users",
-          key: "id"
+          key: "id",
         },
-        onDelete : "CASCADE",
+        onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        allowNull: false
-      }, 
+        allowNull: false,
+      },
+      datevisit: {
+        type: Sequelize.DATE,
+      },
       prix: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       createdAt: {
         allowNull: false,

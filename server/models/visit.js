@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     motif: DataTypes.STRING,
     interrogatoire: DataTypes.STRING,
     conclusion: DataTypes.STRING,
+    datevisit: DataTypes.DATE,
     prix: DataTypes.FLOAT
    
     

@@ -2,7 +2,15 @@ import React, { useRef } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHospital } from "@fortawesome/free-solid-svg-icons";
+import { faHospitalUser } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faUserDoctor } from "@fortawesome/free-solid-svg-icons";
+
 import Time from "./Time";
+
 
 export default function MenuNavBar({ fixed }) {
   const visit =useRef()
@@ -60,7 +68,8 @@ export default function MenuNavBar({ fixed }) {
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href=""
                       >
-                        patients
+                        <FontAwesomeIcon icon={faHospitalUser}  size="3x"
+                        color="#193152"    />
                       </a>
                     </Link>
                   </li>
@@ -72,7 +81,8 @@ export default function MenuNavBar({ fixed }) {
 
 
                       >
-                        Visit
+                        <FontAwesomeIcon icon={faUserDoctor} size="3x"
+                        color="#193152"/>
                       </a>
                     </Link>
                     </li>
@@ -83,7 +93,8 @@ export default function MenuNavBar({ fixed }) {
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href=""
                       >
-                        RDV
+                       <FontAwesomeIcon icon={faCalendarCheck} size="3x"
+                        color="#193152"/>
                       </a>
                     </Link>
                   </li>
@@ -93,7 +104,8 @@ export default function MenuNavBar({ fixed }) {
                         className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                         href=""
                       >
-                        paiement
+                        <FontAwesomeIcon icon={faCreditCard} size="3x"
+                        color="#193152" />
                       </a>
                     </Link>
                   </li>
@@ -104,7 +116,8 @@ export default function MenuNavBar({ fixed }) {
                       href=""
                     
                     >
-                      Users
+                     <FontAwesomeIcon icon={faUser} size="3x"
+                        color="#193152"/>
                     </a>
                   </li></Link>: null }
                   <li className="nav-item">
@@ -116,7 +129,8 @@ export default function MenuNavBar({ fixed }) {
                         navigate("/login");
                       }}
                     >
-                      Logout
+                      <FontAwesomeIcon icon={faRightFromBracket} size="3x"
+                        color="#193152" />
                     </a>
                   </li>
                 </ul>
