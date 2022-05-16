@@ -14,12 +14,14 @@ function addVisit(db) {
           .json({ status: "failed", error: errors.join(", ") });
 
       let patientId = parseInt(req.body.patientId);
-      let userId = parseInt(req.body.userId);
       let prix = parseFloat(req.body.prix);
+      //req.userId , see auth middleware
+      let userId = parseInt(req.userId);
+  
 
       let newVisit = {
         motif: req.body.motif,
-        datevisit: req.body.datevisit,
+        datevisit: new Date(req.body.datevisit),
         userId: userId,
         interrogatoire: req.body.interrogatoire,
         conclusion: req.body.conclusion,
@@ -77,6 +79,9 @@ function detailsVisit(db) {
         include: [
           {
             model: db.Patient,
+          },
+          {
+            model: db.Payment,
           },
         ],
       });

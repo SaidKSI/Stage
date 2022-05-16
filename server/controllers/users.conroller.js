@@ -20,7 +20,7 @@ function login(db) {
       },
     });
     if (user) {
-      let token = generateAccessToken({ email: user.email, role: user.role });
+      let token = generateAccessToken({ userid: user.id,email: user.email, role: user.role });
       return res.json({
         status: "success",
         token: token,

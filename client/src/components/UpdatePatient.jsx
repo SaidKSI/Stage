@@ -15,22 +15,30 @@ export default function PatientDetails() {
   const [gender, setGender] = useState("");
   const [dateN, setDateN] = useState("");
   const [email, setEmail] = useState("");
+  const [patient, setPatient] = useState({
+    firstName: "",
+    lastName: "",
+    cin: "",
+    gender: "",
+    dateN: "",
+    email: "",
+    patient: "",
+  });
+
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
 
   const snackbarRef = useRef(null);
-  const [patient, setPatient] = useState(null);
+
   const [loading, setLoading] = useState(false);
- 
 
   let { id } = useParams();
+  let navigate=useNavigate()
+  // onInputChange
   function onInputChange(e) {
-    if (e.target.name === "firstName") setfirstName(e.target.value);
-    else if (e.target.name === "lastName") setlastName(e.target.value);
-    else if (e.target.name === "cin") setcin(e.target.value);
-    else if (e.target.name === "gender") setGender(e.target.value);
-    else if (e.target.name === "email") setEmail(e.target.value);
-    else if (e.target.name === "dateN") setDateN(e.target.value);
+    let newPatientData = { ...patient };
+    newPatientData[e.target.name] = e.target.value;
+    setPatient(newPatientData);
   }
   // get one Patient
   async function getPatient(patientId) {
@@ -62,22 +70,16 @@ export default function PatientDetails() {
     }
   }, []);
 
-  async function onSubmit(patientId) {
-    window.location.reload();
+  async function onSubmit(event) {
+  
     try {
       snackbarRef.current.show();
-      patientId.preventDefault();
+      event.preventDefault();
 
       let response = await axios.put(
-        "http://localhost:8000/patients/" + patientId,
-        {
-          firstName: firstName,
-          lastName: lastName,
-          cin: cin,
-          gender: gender,
-          email: email,
-          dateN: dateN,
-        },
+        "http://localhost:8000/patients/" + patient.id,
+       patient
+       ,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("user_token"),
@@ -86,6 +88,7 @@ export default function PatientDetails() {
       );
       setResult(SnackbarType.success);
       setMsg("patient added");
+      navigate('/patients')
       return result, msg;
     } catch {
       setResult(SnackbarType.fail);
@@ -215,9 +218,10 @@ export default function PatientDetails() {
                             <input
                               type="radio"
                               id="Homme"
-                              value={"Homme"}
-                              name="Homme"
-                              onClick={() => setGender("Male")}
+                              value={"male"}
+                              name="gender"
+                              checked={patient.gender==="male" ? true: false}
+                              onClick={(e) => onInputChange(e)}
                             />
                           </div>
                           <div>
@@ -230,10 +234,11 @@ export default function PatientDetails() {
                             </label>
                             <input
                               type="radio"
-                              value={"Femme"}
+                              value={"female"}
                               id="Femme"
-                              name="Femme"
-                              onClick={() => setGender("Femme")}
+                              checked={patient.gender==="female" ? true: false}
+                              name="gender"
+                              onClick={(e) => onInputChange(e)}
                             />
                           </div>
                         </div>
@@ -244,7 +249,7 @@ export default function PatientDetails() {
                         <button
                           type="submit"
                           className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                          onClick={(e) => onSubmit(patient.id)}
+                          onClick={(event) => onSubmit(event)}
                         >
                           Save
                         </button>

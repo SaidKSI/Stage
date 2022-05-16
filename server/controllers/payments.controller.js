@@ -18,6 +18,9 @@ function listPayment(db) {
   };
 }
 
+
+
+
 // function addPayment(db) {
 //   return async function (req, res) {
 //     try {
@@ -83,7 +86,8 @@ function addPayment(db) {
   return async function (req, res) {
     try {
       let errors = [];
-      if (!req.body.patientId) errors.push("no patient Id");
+      if (!req.params.id) errors.push("no visitId");
+      if (!req.body.montant) errors.push("no montant");
 
       if (errors.length > 0)
         return res
@@ -98,20 +102,19 @@ function addPayment(db) {
                 model: db.Visit,
            }
           ],
+          where:{visitId : visitId},
         order: [["createdAt", "DESC"]],
         Limit: 1,
       });
-      let newPayment = {
-        visitId: visitId,
-        montant: montant
-      };
+ 
+      // ila kayn 
       if (lastPayments) {
         let rest = lastPayments.rest - montant;
         let newPayment = {
           visitId: visitId,
-          patientId: patientId,
           montant: montant,
           rest: rest,
+          patientId:1
         };
         let payment = await db.Payment.create(newPayment);
 
@@ -125,7 +128,7 @@ function addPayment(db) {
         let rest = visit.prix - montant;
         let newPayment = {
           visitId: visitId,
-          patientId: patientId,
+          patientId:1,
           montant: montant,
           rest: rest,
         };

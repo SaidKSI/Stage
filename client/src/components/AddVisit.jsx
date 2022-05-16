@@ -1,6 +1,7 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import Snackbar from "./Notification";
 
 const SnackbarType = {
@@ -9,7 +10,8 @@ const SnackbarType = {
 };
 
 export default function AddVisit() {
-  const [patientId, setPatientId] = useState("");
+  
+  const [patient, setPatient] = useState(null);
   const [docteurId, setDocteurId] = useState("");
   const [motif, setMotif] = useState("");
   const [datevisit, setDateVisit] = useState("");
@@ -18,12 +20,16 @@ export default function AddVisit() {
   const [prix, setPrix] = useState("");
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
+  const [patients, setPatients] = useState([]);
+
+  //PARAMS
+  let { patientId } = useParams();
 
   const snackbarRef = useRef(null);
 
   function onInputChange(e) {
-    if (e.target.name === "patientId") setPatientId(e.target.value);
-    else if (e.target.name === "docteurId") setDocteurId(e.target.value);
+   
+     if (e.target.name === "docteurId") setDocteurId(e.target.value);
     else if (e.target.name === "datevisit") setDateVisit(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
     else if (e.target.name === "interrogatoire")
@@ -32,8 +38,17 @@ export default function AddVisit() {
     else if (e.target.name === "prix") setPrix(e.target.value);
   }
 
+async function getPatient() {
+ let response=await axios.get("http://localhost:8000/patients/"+patientId,
+ {
+   headers: {
+     Authorization: "Bearer " + localStorage.getItem("user_token"),
+   },
+ });
+ setPatient(response.data.payload)
+
+}
   async function onSubmit(e) {
-    
     snackbarRef.current.show();
     try {
       e.preventDefault();
@@ -41,7 +56,7 @@ export default function AddVisit() {
       let response = await axios.post(
         "http://localhost:8000/visits/addvisit",
         {
-          patientId: patientId,
+          patientId: patient.id,
           userId: docteurId,
           motif: motif,
           interrogatoire: interrogatoire,
@@ -63,6 +78,9 @@ export default function AddVisit() {
       return result, msg;
     }
   }
+useEffect(() => {
+  getPatient(patientId)
+}, [])
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -81,63 +99,55 @@ export default function AddVisit() {
         <div className="mt-5  col-span-3">
           <form action="#" method="POST" className="pb-3">
             <div className="shadow overflow-hidden sm:rounded-md ">
-              <div className="flex justify-evenly"><div className="  px-10">
-                <label
-                  htmlFor="patientId"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Patient C.I.N
-                </label>
-                <input
-                  required
-                  type="number"
-                  id="patientId"
-                  value={patientId}
-                  onChange={(e) => onInputChange(e)}
-                  name="patientId"
-                  autoComplete="patienId-name"
-                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+              <div className="flex justify-evenly">
+                <div className="  px-10">
+                  <label
+                    htmlFor="patientId"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Patient C.I.N
+                  </label>
+                 <p>{patient?.firstName+" "+patient?.lastName}</p>
+
+                </div>
+                <div className="  px-10">
+                  <label
+                    htmlFor="docteurId"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Docteur
+                  </label>
+                  <input
+                    required
+                    type="number"
+                    id="docteurId"
+                    value={docteurId}
+                    onChange={(e) => onInputChange(e)}
+                    name="docteurId"
+                    autoComplete="docteurId-name"
+                    className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div className="  px-10">
+                  <label
+                    htmlFor="datevisit"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Date Visit
+                  </label>
+                  <input
+                    required
+                    type="date"
+                    id="datevisit"
+                    value={datevisit}
+                    onChange={(e) => onInputChange(e)}
+                    name="datevisit"
+                    autoComplete="datevisit-name"
+                    className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
               </div>
-              <div className="  px-10">
-                <label
-                  htmlFor="docteurId"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Docteur 
-                </label>
-                <input
-                  required
-                  type="number"
-                  id="docteurId"
-                  value={docteurId}
-                  onChange={(e) => onInputChange(e)}
-                  name="docteurId"
-                  autoComplete="docteurId-name"
-                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-              <div className="  px-10">
-                <label
-                  htmlFor="datevisit"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Date Visit
-                </label>
-                <input
-                  required
-                  type="date"
-                  id="datevisit"
-                  value={datevisit}
-                  onChange={(e) => onInputChange(e)}
-                  name="datevisit"
-                  autoComplete="datevisit-name"
-                  className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-              </div>
-              
-              
+
               <br></br>
               <div className="px-10">
                 <label

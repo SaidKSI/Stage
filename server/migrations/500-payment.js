@@ -7,17 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      patientId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "patients",
-          key: "id",
-        },
-        onDelete : "CASCADE",
-        onUpdate: "CASCADE",
-        allowNull: false,
-      },
+      }, 
       visitId: {
         type: Sequelize.INTEGER,
         references: {

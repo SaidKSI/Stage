@@ -49,10 +49,10 @@ export default function VisitDetails() {
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
-                Applicant Information
+              Visit details
               </h3>
               <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Visit details .
+             Patient: {`${visit.Patient.firstName} ${visit.Patient.lastName}`}
               </p>
             </div>
             <div className="border-t border-gray-200">
@@ -100,7 +100,22 @@ export default function VisitDetails() {
                   </dd>
                   
                 </div>
-                
+                <div className=" ">
+                <h3 className="font-medium text-xl">Payments</h3>
+                {
+                  visit.Payments.length===0 ? <div className="text-red-500">No payments</div> : "" 
+                }
+                <div className={`flex-col space-y-3 ${visit.Payments.find(x=>x.rest===0) ? "" : "bg-red-500 text-white"}`} >
+                  {
+                    visit.Payments.map((payment,index)=>(
+                  <div className="flex">
+                    <div className="">Amount: {payment.montant}</div>
+                    <div className="">Rest: {payment.rest}</div>
+                  </div>
+                      ))
+                }</div>
+              
+                </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 
                   <div className="px-4 py-3  text-right sm:px-6">

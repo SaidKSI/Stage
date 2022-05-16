@@ -65,12 +65,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 ###
 POST    http://localhost:8000/visits/addvisit
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY1MDU4NjQzOX0.dFuCOsAH5rqSvRQVEiKt9CEZ6jF-hu5Lym5aO0m2-Gk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjIsImVtYWlsIjoiZG9jQGRvYy5jb20iLCJyb2xlIjoiRG9jdG9yIiwiaWF0IjoxNjUyNjY0NjY1fQ.L5zYFVUDIT4-8F4izSYBDd-SPP-RkPrxD_x8M-Bw8Gc
 
 {
    
-    "motif": "Fever",
-    "userId" : 2 ,
+    "motif": "Fever", 
     "interrogatoire": "dolo",
     "conclusion": "Dwa",
     "prix": 250.00,

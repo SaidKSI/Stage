@@ -1,20 +1,23 @@
-const jwt = require("jsonwebtoken"); 
+const jwt = require("jsonwebtoken");
 const { secret } = require("./utils");
 
-    const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers["authorization"];
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
 
-    
-    const token = authHeader?.split(" ")[1];
- 
-    if (token === null) return res.status(403).json({status: "failed", error: "unauthorized"})
+  const token = authHeader?.split(" ")[1];
 
-    jwt.verify(token, secret, (err, userData) => { 
-      if (err) 
-      return res.status(403).json({status: "failed", error: "unauthorized"})
-      
-      next();
-    });
-  };
+  if (token === null)
+    return res.status(403).json({ status: "failed", error: "unauthorized" });
 
-  module.exports={authenticateToken}
+  jwt.verify(token, secret, (err, userData) => {
+
+    //userData is the user data in the token  genera on login
+    if (err)
+      return res.status(403).json({ status: "failed", error: "unauthorized" });
+
+      req.userId=userData.userid
+    next();
+  });
+};
+
+module.exports = { authenticateToken };

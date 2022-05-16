@@ -24,7 +24,7 @@ module.exports = {
       // },
       role: {
         type: Sequelize.STRING,
-        isIn: [['Medicine', 'Assistance','Admin']],
+        isIn: [['Doctor', 'Assistance','Admin']],
       },
       specialization: {
         type: Sequelize.STRING,

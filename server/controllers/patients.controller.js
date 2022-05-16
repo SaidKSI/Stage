@@ -7,7 +7,7 @@ function listPatients(db) {
     let patients = await db.Patient.findAndCountAll({
       where: {},
       include: [
-        { model: db.Rdv }
+        { model: db.Rdv },
         
       ]
     });
@@ -23,7 +23,8 @@ function detailsPatient(db) {
 
       let patient = await db.Patient.findOne({
         where: { id: id },
-        include: [{ model: db.Rdv }],
+        include: [{ model: db.Rdv },{ model: db.Visit  }
+        ],
         order: [[db.Rdv, "daterdv", "DESC"]],
       });
 

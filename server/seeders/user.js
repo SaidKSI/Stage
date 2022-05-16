@@ -14,8 +14,8 @@ module.exports = {
     await queryInterface.bulkInsert(
       "users",
       [
-        {firstName: "admin",
-        lastName: "admin",
+        {firstName: "Hafid",
+        lastName: "Hafidi",
           role: "Admin",
           email: "admin@admin.com", 
           password: "1234",
@@ -23,9 +23,9 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          firstName: "medicine",
-        lastName: "medicine",
-          role: "Medicine",
+          firstName: "Sadik",
+        lastName: "Sadiki",
+          role: "Doctor",
           specialization: " Dermatology",
           email: "doc@doc.com", 
           password: "1234",
@@ -33,8 +33,8 @@ module.exports = {
       updatedAt: new Date()
         },
         {
-          firstName: "assistance",
-        lastName: "assistance",
+          firstName: "Karim",
+        lastName: "Karimi",
           role: "Assistance",
           email: "assistance@assistance.com", 
           password: "1234",

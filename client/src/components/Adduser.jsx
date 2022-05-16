@@ -208,8 +208,8 @@ export default function Adduser() {
                             <option value="Dermatology" className="">
                               Dermatology
                             </option>
-                            <option value="Family medicine" className=" ">
-                              Family medicine
+                            <option value="Family Doctor" className=" ">
+                              Family Doctor
                             </option>
                             <option value="Medical genetics" className=" ">
                               Medical genetics
@@ -224,10 +224,10 @@ export default function Adduser() {
                               Pediatrics
                             </option>
                             <option
-                              value="Physical medicine and rehabilitation"
+                              value="Physical Doctor and rehabilitation"
                               className=" "
                             >
-                              Physical medicine and rehabilitation
+                              Physical Doctor and rehabilitation
                             </option>
                             <option value="Psychiatry" className=" ">
                               Psychiatry
