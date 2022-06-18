@@ -26,11 +26,14 @@ export default function Login() {
       });
       let role = response.data.role;
       let token = response.data.token;
+      let userid = response.data.userid;
       let userName = `${response.data.firstName} ${response.data.lastName}`;
 
       localStorage.setItem("user_token", token);
       localStorage.setItem("role", role);
+      localStorage.setItem("userid", userid);
       localStorage.setItem("userName", userName);
+      
       navigate("/");
     } catch (err) {
       alert("Email ou nom d'utilisateur est incorecte");

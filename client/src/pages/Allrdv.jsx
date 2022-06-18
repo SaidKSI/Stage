@@ -206,13 +206,7 @@ export default function Allrdv() {
                 paginate={paginate}
               />
                 </span>
-              <div className="">
-                <Link to={"/rdvs/addrdv"}>
-                  <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  <FontAwesomeIcon icon={faCalendarPlus} size="2x" />
-                  </button>
-                </Link>
-              </div>
+              
             </div>
           </div>
         </div>

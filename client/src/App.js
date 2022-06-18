@@ -53,14 +53,14 @@ function App() {
       
                         {/* Visits */}
       <Route path="/visits" element={<Privateroute><Layout><Visit /></Layout></Privateroute>} /> 
-      <Route path="/visits/:id" element={<Privateroute><Layout><VisitDetails /></Layout></Privateroute>} /> 
+      <Route path="/visits/:id" element={<Privateroute><Layout><VisitDetails/></Layout></Privateroute>} /> 
       <Route path="/visits/addvisit/:patientId" element={<Privateroute><Layout><AddVisit /></Layout></Privateroute>} /> 
       
                 {/* RDVs */}
       {/* <Route path="/rdvs/:id" element={<Privateroute><Layout><RDVlist /></Layout></Privateroute>} /> */}
       <Route path="/rdvs" element={<Privateroute><Layout><Allrdv /></Layout></Privateroute>} /> 
       <Route path="/rdvs/:id" element={<Privateroute><Layout><PatientDetails /></Layout></Privateroute>} /> 
-      <Route path="/rdvs/addrdv" element={<Privateroute><Layout><AddRDV/></Layout></Privateroute>} /> 
+      <Route path="/rdvs/addrdv/:patientId" element={<Privateroute><Layout><AddRDV/></Layout></Privateroute>} /> 
 
                   {/* Payments */}
       <Route path="/payments" element={<Privateroute><Layout><Paiment /></Layout></Privateroute>} /> 

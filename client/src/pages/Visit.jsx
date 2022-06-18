@@ -300,13 +300,12 @@ export default function Visit() {
                         <td className="flex flex-rows gap-2  p-3 text-sm text-gray-700 whitespace-nowrap">
                           <div className="">
                             {" "}
-                            <button
-                              onClick={() => handleDeleteClick(visit.id)}
-                              type="submit"
+                            
+                            <Link to={"/visits/" + visit.id}>
+                              <button
                               className="inline-flex justify-center py-2 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                              Delete
-                            </button>
+                              >Details</button>
+                            </Link>
                             <Snackbar
                               ref={snackbarRef}
                               message={msg}
@@ -325,13 +324,7 @@ export default function Visit() {
                   paginate={paginate}
                 />
               </span>
-              <div className="py-10">
-                <Link to={"/visits/addvisit"}>
-                  <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  <FontAwesomeIcon icon={faCalendarPlus} size="2x" />
-                  </button>
-                </Link>
-              </div>
+             
             </div>
           </div>
         </div>

@@ -4,8 +4,6 @@ import axios from "axios";
 import Snackbar from "../components/Notification";
 import Loader from "../components/Loading";
 import Pagination from "../components/Pagination";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 const SnackbarType = {
@@ -171,9 +169,9 @@ export default function Paiment() {
                             </a>
                           </td>
                     
-                        <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {/* <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {`${payment.Patient.firstName} ${payment.Patient.lastName}`}
-                        </td>
+                        </td> */}
                         <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                           {payment.visitId}
                         </td>

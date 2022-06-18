@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef,useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Snackbar from "./Notification";
 import { Times } from "./utils/Times";
 
@@ -9,10 +10,11 @@ const SnackbarType = {
   fail: "fail",
 };
 export default function AddRDV() {
-  const [patientId, setpatientId] = useState("");
+ // const [patientId, setpatientId] = useState("");
   const [motif, setmotif] = useState("");
   const [daterdv, setdaterdv] = useState("");
   const [specialization, setSpecialization] = useState("General");
+  const [patient, setPatient] = useState(null);
 
   const [timerdv, setRdvTime] = useState();
 
@@ -21,9 +23,21 @@ export default function AddRDV() {
 
   const snackbarRef = useRef(null);
 
+
+  let { patientId } = useParams();
+
+async function getPatient() {
+ let response=await axios.get("http://localhost:8000/patients/"+patientId,
+ {
+   headers: {
+     Authorization: "Bearer " + localStorage.getItem("user_token"),
+   },
+ });
+ setPatient(response.data.payload)
+}
+
   function onInputChange(e) {
-    if (e.target.name === "patientId") setpatientId(e.target.value);
-    else if (e.target.name === "motif") setmotif(e.target.value);
+     if (e.target.name === "motif") setmotif(e.target.value);
     else if (e.target.name === "daterdv") setdaterdv(e.target.value);
     else if (e.target.name === "specialization")
       setSpecialization(e.target.value);
@@ -37,7 +51,7 @@ export default function AddRDV() {
       let response = await axios.post(
         "http://localhost:8000/rdvs/addrdv",
         {
-          patientId: patientId,
+          patientId: patient.id,
           motif: motif,
           daterdv: daterdv,
           specialization: specialization,
@@ -58,6 +72,9 @@ export default function AddRDV() {
       return result, msg;
     }
   }
+  useEffect(() => {
+    getPatient(patientId)
+  }, [])
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -75,23 +92,16 @@ export default function AddRDV() {
         <div className="mt-5  col-span-3">
           <form action="#" method="POST">
             <div className="shadow overflow-hidden sm:rounded-md ">
-              <div className="  sm:p-3">
-                <label
-                  htmlFor="patientId"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  PatientID
-                </label>
-                <input
-                  type="text"
-                  id="patientId"
-                  value={patientId}
-                  onChange={(e) => onInputChange(e)}
-                  name="patientId"
-                  autoComplete="patientId-name"
-                  className="mt-1 block w-[25%] py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+            <div className="  px-10">
+                  <label
+                    htmlFor="patientId"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Patient 
+                  </label>
+                 <p>{patient?.firstName+" "+patient?.lastName}</p>
+
+                </div>
               <br></br>
               <div className=" sm:p-3">
                 <label

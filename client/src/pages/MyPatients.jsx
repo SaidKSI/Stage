@@ -135,7 +135,7 @@ export default function MyPatients() {
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {index}
                     </td>
-                    <Link to={"/patients/" + patient.id}>
+                    
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <a
                           className="font-bold text-blue-500 hover:underline"
@@ -144,7 +144,7 @@ export default function MyPatients() {
                           {patient.cin}
                         </a>
                       </td>
-                    </Link>
+                 
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {`${patient.firstName} ${patient.lastName}`}
                     </td>
@@ -160,19 +160,19 @@ export default function MyPatients() {
                     </td>
                     <td className="flex flex-rows gap-2  p-3 text-sm text-gray-700 whitespace-nowrap">
                       <div className="">
-                        {" "}
+                         <Link to={"/patients/" + patient.id}>{" "}
                         <button
-                          //onClick={() => handleDeleteClick(patient.id)}
+                         
                           type="submit"
                           className="inline-flex justify-center py-2 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white sm:bg-[#193152] hover:bg-[#0f1e33] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                          Delete
+                          Details
                         </button>
                         <Snackbar
                           ref={snackbarRef}
                           message={msg}
                           type={result}
-                        />
+                        /></Link>
                       </div>
                       <div className="">
                         <Link to={"/patients/updatepatient/" + patient.id}>

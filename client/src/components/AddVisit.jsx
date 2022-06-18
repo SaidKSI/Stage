@@ -10,7 +10,6 @@ const SnackbarType = {
 };
 
 export default function AddVisit() {
-  
   const [patient, setPatient] = useState(null);
   const [docteurId, setDocteurId] = useState("");
   const [motif, setMotif] = useState("");
@@ -20,7 +19,6 @@ export default function AddVisit() {
   const [prix, setPrix] = useState("");
   const [result, setResult] = useState();
   const [msg, setMsg] = useState("");
-  const [patients, setPatients] = useState([]);
 
   //PARAMS
   let { patientId } = useParams();
@@ -28,8 +26,7 @@ export default function AddVisit() {
   const snackbarRef = useRef(null);
 
   function onInputChange(e) {
-   
-     if (e.target.name === "docteurId") setDocteurId(e.target.value);
+    if (e.target.name === "docteurId") setDocteurId(e.target.value);
     else if (e.target.name === "datevisit") setDateVisit(e.target.value);
     else if (e.target.name === "motif") setMotif(e.target.value);
     else if (e.target.name === "interrogatoire")
@@ -38,16 +35,17 @@ export default function AddVisit() {
     else if (e.target.name === "prix") setPrix(e.target.value);
   }
 
-async function getPatient() {
- let response=await axios.get("http://localhost:8000/patients/"+patientId,
- {
-   headers: {
-     Authorization: "Bearer " + localStorage.getItem("user_token"),
-   },
- });
- setPatient(response.data.payload)
-
-}
+  async function getPatient() {
+    let response = await axios.get(
+      "http://localhost:8000/patients/" + patientId,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("user_token"),
+        },
+      }
+    );
+    setPatient(response.data.payload);
+  }
   async function onSubmit(e) {
     snackbarRef.current.show();
     try {
@@ -78,9 +76,9 @@ async function getPatient() {
       return result, msg;
     }
   }
-useEffect(() => {
-  getPatient(patientId)
-}, [])
+  useEffect(() => {
+    getPatient(patientId);
+  }, []);
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -101,32 +99,19 @@ useEffect(() => {
             <div className="shadow overflow-hidden sm:rounded-md ">
               <div className="flex justify-evenly">
                 <div className="  px-10">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Patient
+                  </label>
+                  <p>{patient?.firstName + " " + patient?.lastName}</p>
+                </div>
+                <div className="  px-10">
                   <label
                     htmlFor="patientId"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Patient C.I.N
+                    Medicine
                   </label>
-                 <p>{patient?.firstName+" "+patient?.lastName}</p>
-
-                </div>
-                <div className="  px-10">
-                  <label
-                    htmlFor="docteurId"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Docteur
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    id="docteurId"
-                    value={docteurId}
-                    onChange={(e) => onInputChange(e)}
-                    name="docteurId"
-                    autoComplete="docteurId-name"
-                    className="mt-1 block w-full py-2 px-3 border  border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <p>{localStorage.getItem("userName")}</p>
                 </div>
                 <div className="  px-10">
                   <label

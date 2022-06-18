@@ -4,10 +4,11 @@ import PatientList from "./PatientList";
 import Allrdv from "./Allrdv";
 import Visit from "./Visit";
 import Paiment from "./Paiment";
+import { Link } from "react-router-dom";
 
 
 export default function Home() {
-  
+  const role = localStorage.getItem("role")
 
   
 
@@ -20,23 +21,63 @@ export default function Home() {
           <CurrentTime></CurrentTime>
         </div>
       </div>
-      
-      <div className="py-4">
-      
-        <PatientList></PatientList>
-      </div>
-      <div className="py-4">
-    
-        <Allrdv></Allrdv>
-      </div>
-      <div className="py-4">
-    
-        <Visit></Visit>
-      </div>
-      <div className="py-4">
-        
-        <Paiment></Paiment>
-      </div>
+        <div className="">
+          <ul className="flex justify-center justify-items-center gap-4 pt-52">
+          <li className="">
+                    <Link to={"/patients"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xl uppercase font-bold leading-snug text-blue-500 hover:opacity-75"
+                        href=""
+                      >
+                        Patients
+                      </a>
+                    </Link>
+                  </li>
+                  { role !== "Assistance" ?<li className="nav-item">
+                    <Link to={"/visits"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xl uppercase font-bold leading-snug text-blue-500 hover:opacity-75"
+                        href="/Visit"
+
+
+                      >
+                        Visites
+                      </a>
+                    </Link>
+                    </li>
+                  : null }
+                  <li className="nav-item">
+                    <Link to={"/rdvs"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xl uppercase font-bold leading-snug text-blue-500 hover:opacity-75"
+                        href=""
+                      >
+                       RDVs
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/payments"}>
+                      <a
+                        className="px-3 py-2 flex items-center text-xl uppercase font-bold leading-snug text-blue-500 hover:opacity-75"
+                        href=""
+                      >
+                        Paiements
+                      </a>
+                    </Link>
+                  </li>
+                   { role === "Admin" ?  <Link to={"/users"}>
+                  <li className="nav-item">
+                    <a
+                      className="px-3 py-2 flex items-center text-xl uppercase font-bold leading-snug text-blue-500 hover:opacity-75"
+                      href=""
+                    
+                    >
+                     Users
+                    </a>
+                  </li></Link>: null }
+          </ul>
+        </div>
     </div>
   );
 }
